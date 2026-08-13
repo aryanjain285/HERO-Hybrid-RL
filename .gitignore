@@ -1,2 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Experiment outputs
+runs/
+wandb/
+*.parquet
+
+# Editors and OS
 .claude/settings.local.json
 ~$*
