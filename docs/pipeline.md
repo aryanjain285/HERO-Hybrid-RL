@@ -26,7 +26,32 @@ scripts/fetch_models.sh --tier dev    # Qwen3-1.7B, AceMath RM, general-verifier
 | `setup.sh` | Python ≥3.11 | ~1 min | `.venv`, editable install, passing tests |
 | `setup.sh --with-gpu` | Linux, CUDA, NVIDIA driver | ~10 min | torch, vllm, verl |
 | `run_audit.sh` | setup | ~1 min | `runs/audit-<stamp>/` logs, junit xml, manifest |
+| `run_m0.sh` | setup, Ollama server | ~15 min | `runs/m0-<stamp>/` Table 1 metrics + labelled responses |
 | `fetch_models.sh --tier T` | setup, disk | varies | weights under `$HF_HOME` |
+
+### Milestone 0: the verifier study
+
+```bash
+scripts/run_m0.sh                                  # 30 problems x 2 samples
+scripts/run_m0.sh --problems 100 --samples 3       # tighter confidence intervals
+scripts/run_m0.sh --model qwen2.5:7b-instruct      # stronger generator
+```
+
+Needs a running Ollama server (`ollama serve`); the script pulls the model if
+absent, because an implicit mid-run pull would stall the batch. Everything runs on
+CPU — measured throughput on a machine with no discrete GPU was ~48 tok/s for
+`qwen2.5:1.5b-instruct` and ~106 tok/s for the 0.5B.
+
+Disk needed per tier, measured against the Hub with
+`python -m hero.cli check-models --tier T`:
+
+| tier | weights | recommended free |
+|---|---|---|
+| `smoke` | 15.3 GB | 19.9 GB |
+| `dev` | 20.7 GB | 26.9 GB |
+| `headline` | 25.3 GB | 32.9 GB |
+| `octothinker` | 30.2 GB | 39.3 GB |
+| `extension` | 18.5 GB | 24.0 GB |
 
 Tiers are defined in `hero/registry.py` and listed with
 `python -m hero.cli models --tier dev --field table`, so no script carries its own

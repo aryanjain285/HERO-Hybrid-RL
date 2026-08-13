@@ -30,9 +30,10 @@ See [`docs/paper-audit.md`](docs/paper-audit.md) §4.
 ```bash
 scripts/setup.sh        # venv, install, tests   (~1 min, CPU only)
 scripts/run_audit.sh    # full audit + artefacts (~1 min, CPU only)
+scripts/run_m0.sh       # verifier study on real problems (~15 min, needs Ollama)
 ```
 
-Both work on Linux and macOS with Python ≥3.11 and nothing else.
+All CPU-only, on Linux or macOS with Python ≥3.11.
 [`docs/pipeline.md`](docs/pipeline.md) covers the GPU stages.
 
 ## Layout
@@ -44,18 +45,27 @@ hero/                    Reward core and configuration (numpy only, no GPU)
   registry.py            Named model presets and compute tiers
   config.py              Hashable run definitions, step accounting, A-1 grid
   toy.py                 Complete GRPO trainer on a synthetic task
+  verifiers.py           Rule-based math answer checkers
+  llm.py                 Ollama client and the paper's judge template
+  data.py                MATH-500 loader
+  study.py               Verifier-study metrics (Table 1 methodology)
   cli.py                 Shell-facing entry points
 analysis/
   invariance_check.py    A-1 / A-1b at the advantage level
   grpo_end_to_end.py     A-1 at the training level, plus A-12
-scripts/                 setup / audit / model-fetch pipeline, strict mode
-tests/                   208 property tests pinning every audit claim
+  verifier_study.py      Milestone 0, end to end on real problems
+scripts/                 setup / audit / M0 / model-fetch, strict mode throughout
+tests/                   284 property tests pinning every audit claim
 docs/
   paper-audit.md         Deep read, verification pass, findings A-1 … A-20
   decisions.md           Decision log D-01 … D-11
   pipeline.md            How to run everything, and what is not automated
   FYP_PRD_HERO_Hybrid_Reward_RL.docx   Project requirements document (v1.1)
 ```
+
+The reward core imports only numpy. Heavier dependencies are confined to their own
+modules and imported lazily, so `import hero` stays cheap and the audit stages run
+without sympy, huggingface_hub, or a model server.
 
 ## Switching models and arms
 
