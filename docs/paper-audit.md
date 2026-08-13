@@ -223,11 +223,43 @@ makes every published ablation direction mechanically explicable.
 Reproduce with `analysis/invariance_check.py`; the claims are pinned as tests in
 `tests/test_core.py::TestAuditA1WeightInvariance` and `::TestAuditA1bAlphaInvariance`.
 
-What remains is the training-level consequence, not the algebra:
-`hero.config.a1_grid()` defines the 2×2 `{std on, off} × {weight on, off}`. Its
-std-on half is a **falsifiable prediction: those two arms should be statistically
-indistinguishable.** If they differ, something in the pipeline is not what this
-analysis assumes, and finding it is itself the result.
+### 4.7 Confirmed at the training level
+
+The above is single-batch arithmetic. `analysis/grpo_end_to_end.py` runs a complete
+GRPO trainer — group sampling, PPO-clipped ratios, four off-policy mini-batch
+updates per rollout batch, analytic gradients — for 150 steps across three seeds,
+driven by the same reward code. Result, over 600 gradient updates:
+
+| `norm_adv_by_std` | `adv_epsilon` | max \|Δθ\| | Δ accuracy | sign across seeds |
+|---|---|---|---|---|
+| True (verl default) | 1e-6 | ~1.8e-2 | ±0.0001 | inconsistent |
+| True | 0 | ~4e-15 | ±0.0000 | inconsistent |
+| False | 1e-6 | ~1.7 | **+0.0099** | consistent |
+| False | 0 | ~1.7 | **+0.0099** | consistent |
+
+An initial prediction of *bit-identical* trajectories under the default was
+**falsified**: they diverge by ~1e-2. Zeroing the advantage epsilon collapses the
+divergence to float64 rounding (~4e-15), which identifies the cause exactly — the
+`1e-6` denominator is the only term breaking cancellation, and chaotic optimisation
+amplifies that residue by ~13 orders of magnitude over a run.
+
+The residue is not a mechanism: its accuracy effect is ~0.01 percentage points with
+inconsistent sign, versus a consistent **+0.99 points** when std normalisation is
+off. So A-1 holds, in its correct form: *under verl's default the weight cannot
+produce a systematic effect, only amplified numerical noise.*
+
+Scope, stated plainly. The trainer uses a 4-parameter softmax policy, not a
+language model, so it settles optimiser-level questions and nothing else. One of
+the paper's claims specifically **did not** reproduce there: verifier-only training
+matched every dense arm, because only ~18% of groups were all-incorrect (most
+uniform groups late in training are all-*correct*, from mastery rather than
+starvation) and mixed groups supply ample signal for four parameters. That is a
+limitation of the task, not evidence against HERO — demonstrating the benefit needs
+a policy large enough to be starved.
+
+What remains open is only whether the real runs used mean-only centring.
+`hero.config.a1_grid()` defines the 2×2 for the dev tier; author code or
+correspondence would settle it faster than compute.
 
 **The design rule this yields** — and the transferable lesson for the FYP —
 is: *difficulty or reliability scaling must be applied to the advantage, or to the
@@ -335,8 +367,11 @@ The PRD's six questions stand. Three are now sharper:
 
 ## 7. Reproducibility of this document
 
-- `analysis/invariance_check.py` regenerates every measured number in §4.
-- `python -m pytest tests/ -q` asserts each claim (121 tests).
+- `scripts/run_audit.sh` regenerates everything below in about a minute, on CPU,
+  writing logs and a git-stamped manifest to `runs/audit-<stamp>/`.
+- `analysis/invariance_check.py` regenerates the measured numbers in §4.1–4.6;
+  `analysis/grpo_end_to_end.py` those in §4.7.
+- `python -m pytest tests/ -q` asserts each claim (208 tests).
 - Paper numbers in §2 were transcribed from a full-text extraction of the ICLR
   PDF; the Table 1 consistency derivation is arithmetic, reproduced inline.
 - verl behaviour was checked against `main` at read time. Pin the commit before

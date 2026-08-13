@@ -10,40 +10,51 @@ Dense* (arXiv 2510.07242). No official code release.
 
 ## Status
 
-Pre-kickoff. The reward mathematics, experiment configuration, and the audit of
-finding A-1 are implemented and tested. No GPU training has been run.
+Pre-kickoff. The reward mathematics, experiment configuration, a working GRPO
+trainer, and the audit of finding A-1 are implemented and tested. No LLM training
+has been run: that needs a Linux CUDA VM, and the verl reward manager is the next
+build step (see [`docs/pipeline.md`](docs/pipeline.md)).
 
 **Headline audit result.** Under verl's default GRPO config
-(`norm_adv_by_std_in_grpo: True`), both of HERO's advertised knobs are provably
-inert: the variance-aware prompt weight cancels exactly, and the band width `α`
-cancels inside uniform groups — the very regime the method exists to serve. The
-paper's own ablations report effects this configuration cannot produce. See
-[`docs/paper-audit.md`](docs/paper-audit.md) §4; reproduce with
-`python analysis/invariance_check.py`.
+(`norm_adv_by_std_in_grpo: True`), both of HERO's advertised knobs are inert: the
+variance-aware prompt weight cancels, and the band width `α` cancels inside uniform
+groups — the very regime the method exists to serve. Confirmed twice, on advantages
+and on trained policies: over 600 gradient updates the weight shifts final accuracy
+by ~0.01 points with inconsistent sign (traceable entirely to the `1e-6` advantage
+epsilon), versus a consistent **+0.99 points** with std normalisation off. The
+paper's own ablations report effects the default configuration cannot produce.
+See [`docs/paper-audit.md`](docs/paper-audit.md) §4.
+
+## Quick start
+
+```bash
+scripts/setup.sh        # venv, install, tests   (~1 min, CPU only)
+scripts/run_audit.sh    # full audit + artefacts (~1 min, CPU only)
+```
+
+Both work on Linux and macOS with Python ≥3.11 and nothing else.
+[`docs/pipeline.md`](docs/pipeline.md) covers the GPU stages.
 
 ## Layout
 
 ```
-hero/                  Reward core and experiment configuration (numpy only)
-  core.py              Stratified normalisation, variance weighting, GRPO advantage
-  rewards.py           All six reward arms behind one dispatcher
-  registry.py          Named model presets (policy / RM / judge / verifier-LM)
-  config.py            Hashable run definitions, step accounting, A-1 grid
+hero/                    Reward core and configuration (numpy only, no GPU)
+  core.py                Stratified normalisation, variance weighting, GRPO advantage
+  rewards.py             All six reward arms behind one dispatcher
+  registry.py            Named model presets and compute tiers
+  config.py              Hashable run definitions, step accounting, A-1 grid
+  toy.py                 Complete GRPO trainer on a synthetic task
+  cli.py                 Shell-facing entry points
 analysis/
-  invariance_check.py  Audit A-1 / A-1b, no GPU required
-tests/                 121 property tests pinning every audit claim
+  invariance_check.py    A-1 / A-1b at the advantage level
+  grpo_end_to_end.py     A-1 at the training level, plus A-12
+scripts/                 setup / audit / model-fetch pipeline, strict mode
+tests/                   208 property tests pinning every audit claim
 docs/
-  paper-audit.md       Deep read, verification pass, findings A-1 … A-20
-  decisions.md         Decision log D-01 … D-11
+  paper-audit.md         Deep read, verification pass, findings A-1 … A-20
+  decisions.md           Decision log D-01 … D-11
+  pipeline.md            How to run everything, and what is not automated
   FYP_PRD_HERO_Hybrid_Reward_RL.docx   Project requirements document (v1.1)
-```
-
-## Setup
-
-```bash
-uv venv && uv pip install -e ".[dev]"
-python -m pytest tests/ -q
-python analysis/invariance_check.py
 ```
 
 ## Switching models and arms

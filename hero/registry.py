@@ -43,7 +43,8 @@ class ModelSpec:
         hf_id: HuggingFace repo id, or the API model string for remote models.
         role: Pipeline role.
         serving: How it is executed.
-        params_b: Parameter count in billions, for compute planning.
+        params_b: Parameter count in billions, for compute planning, or None
+            when undisclosed (as for closed API models).
         notes: Why this model is in the registry.
         paper_default: True if the HERO paper used this model in this role.
     """
@@ -52,9 +53,18 @@ class ModelSpec:
     hf_id: str
     role: ModelRole
     serving: ServingMode
-    params_b: float
+    params_b: float | None
     notes: str
     paper_default: bool = False
+
+    def __post_init__(self) -> None:
+        if self.params_b is not None and self.params_b <= 0.0:
+            raise ValueError(f"{self.key}: params_b must be positive or None")
+        if self.serving is ServingMode.REMOTE_API and self.params_b is not None:
+            raise ValueError(
+                f"{self.key}: remote API models have undisclosed parameter counts; "
+                "use None rather than a placeholder"
+            )
 
 
 _SPECS: tuple[ModelSpec, ...] = (
@@ -126,7 +136,7 @@ _SPECS: tuple[ModelSpec, ...] = (
         hf_id="gpt-4o",
         role=ModelRole.JUDGE,
         serving=ServingMode.REMOTE_API,
-        params_b=0.0,
+        params_b=None,
         notes="Paper's hard-to-verify judge. Note Table 3 reports GPT-4.1 "
         "instead (audit A-7ii); pin one version across all runs.",
         paper_default=True,
@@ -186,3 +196,46 @@ def by_role(role: ModelRole) -> tuple[ModelSpec, ...]:
 def all_specs() -> tuple[ModelSpec, ...]:
     """Every registered model."""
     return _SPECS
+
+
+TIERS: dict[str, tuple[str, ...]] = {
+    "smoke": ("qwen3-0.6b", "acemath-7b-rm"),
+    "dev": ("qwen3-1.7b", "acemath-7b-rm", "general-verifier"),
+    "headline": ("qwen3-4b", "acemath-7b-rm", "general-verifier"),
+    "octothinker": ("octothinker-8b", "acemath-7b-rm"),
+    "extension": ("qwen3-1.7b", "skywork-v2-8b"),
+}
+"""Model sets per compute tier, so a fetch stage names a tier, not a list.
+
+Judges are excluded: ``gpt-4o`` is an API model with nothing to download, and the
+open judge is only needed at evaluation time.
+"""
+
+
+def tier(name: str) -> tuple[ModelSpec, ...]:
+    """Resolve a compute tier to its downloadable model specs."""
+    if name not in TIERS:
+        raise KeyError(f"unknown tier {name!r}; available: {', '.join(sorted(TIERS))}")
+    return tuple(resolve(key) for key in TIERS[name])
+
+
+def format_tier(name: str, field: str) -> str:
+    """Render a tier for shell consumption or human reading.
+
+    Args:
+        name: Tier name.
+        field: ``hf_id`` or ``key`` for one value per line; ``table`` for an
+            aligned summary.
+    """
+    specs = tier(name)
+    if field == "table":
+        width = max(len(s.key) for s in specs)
+        return "\n".join(
+            f"{s.key:<{width}}  "
+            f"{'unknown' if s.params_b is None else f'{s.params_b:g}B':>8}  "
+            f"{s.role:<13} {s.hf_id}"
+            for s in specs
+        )
+    if field not in ("hf_id", "key"):
+        raise ValueError(f"unknown field {field!r}")
+    return "\n".join(getattr(s, field) for s in specs)

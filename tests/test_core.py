@@ -469,14 +469,38 @@ class TestShapeGroup:
             r_rule, r_rm = make_group(rng, 8, n_correct)
             assert shape_group(r_rule, r_rm, EASY, 2.0).is_uniform is expected
 
-    def test_singleton_band_counter(self, rng):
+    def test_degeneracy_telemetry_separates_singletons_from_ties(self):
+        """A one-member band and an all-tied band are different failures (D-05).
+
+        Conflating them, as a single "singleton" counter would, both understates
+        how many rollouts are pinned and hides RM non-discrimination.
+        """
+        lone_correct = shape_group(
+            np.array([1, 0, 0, 0]), np.array([9.0, 1.0, 2.0, 3.0]), EASY, 2.0
+        )
+        assert (lone_correct.singleton_bands, lone_correct.tied_bands) == (1, 0)
+        assert lone_correct.pinned_rollouts == 1
+
+        both = shape_group(np.array([1, 0, 0]), np.array([9.0, 2.0, 2.0]), EASY, 2.0)
+        assert (both.singleton_bands, both.tied_bands) == (1, 1)
+        # One lone correct plus two tied incorrect: three rollouts pinned to floors.
+        assert both.pinned_rollouts == 3
+
+        healthy = shape_group(
+            np.array([1, 1, 0, 0]), np.array([9.0, 7.0, 2.0, 1.0]), EASY, 2.0
+        )
+        assert (healthy.singleton_bands, healthy.tied_bands) == (0, 0)
+        assert healthy.pinned_rollouts == 0
+
+    def test_outcome_arrays_are_copies(self):
+        """A frozen dataclass holding array views promises immutability it lacks."""
         r_rule = np.array([1, 0, 0, 0])
         r_rm = np.array([9.0, 1.0, 2.0, 3.0])
-        assert shape_group(r_rule, r_rm, EASY, 2.0).singleton_bands == 1
-        # Both bands degenerate: one correct, and all incorrect scores tied.
-        assert shape_group(
-            np.array([1, 0, 0]), np.array([9.0, 2.0, 2.0]), EASY, 2.0
-        ).singleton_bands == 2
+        out = shape_group(r_rule, r_rm, EASY, 2.0)
+        r_rule[0] = 0
+        r_rm[0] = -100.0
+        assert out.r_rule[0] == 1
+        assert out.r_rm[0] == 9.0
 
     def test_full_pipeline_preserves_ordering_after_weighting(self, rng):
         """Weighting is a positive scalar, so P1 survives Eq. 5."""

@@ -6,7 +6,7 @@ manager, and pinned by ``tests/``.
 
 Paper anchors: Eq. 3 stratified normalisation, Eq. 4 variance weighting,
 Eq. 5 final reward. Ambiguities the paper leaves open are named fields on
-:class:`HeroConfig` carrying their decision-log ID; see ``docs/audit.md``.
+:class:`HeroConfig` carrying their decision-log ID; see ``docs/decisions.md``.
 """
 
 from __future__ import annotations
@@ -84,6 +84,20 @@ class HeroConfig:
         return (1.0 - self.beta, 1.0 + self.beta)
 
 
+def minmax_z(values: np.ndarray, cfg: HeroConfig) -> np.ndarray:
+    """Min-max scale to roughly [0, 1] within a group (the inner term of Eq. 3).
+
+    A degenerate range (single member, or all values tied) yields
+    ``cfg.singleton_z`` rather than dividing 0 by epsilon, which is the same
+    number Eq. 3 produces but without relying on the epsilon to rescue it.
+    """
+    values = np.asarray(values, dtype=float)
+    lo, hi = values.min(), values.max()
+    if hi == lo:
+        return np.full(values.shape, cfg.singleton_z)
+    return (values - lo) / (hi - lo + cfg.minmax_epsilon)
+
+
 def stratified_normalise(
     r_rule: np.ndarray, r_rm: np.ndarray, cfg: HeroConfig
 ) -> np.ndarray:
@@ -123,15 +137,8 @@ def stratified_normalise(
     for label, floor, span in ((0, -cfg.alpha, 2.0 * cfg.alpha),
                                (1, 1.0 - cfg.beta, 2.0 * cfg.beta)):
         m = r_rule == label
-        if not m.any():
-            continue
-        lo, hi = r_rm[m].min(), r_rm[m].max()
-        if hi == lo:
-            # Singleton band or all scores tied: Eq. 3 gives 0/epsilon = 0 (D-05).
-            z = np.full(int(m.sum()), cfg.singleton_z)
-        else:
-            z = (r_rm[m] - lo) / (hi - lo + cfg.minmax_epsilon)
-        r_hat[m] = floor + span * z
+        if m.any():
+            r_hat[m] = floor + span * minmax_z(r_rm[m], cfg)
     return r_hat
 
 
@@ -177,6 +184,11 @@ class RunningMeanDispersion:
         return self._value is not None
 
     @property
+    def has_pending(self) -> bool:
+        """True when groups have been observed but not yet folded in."""
+        return bool(self._pending)
+
+    @property
     def value(self) -> float:
         """Current ``sigma_bar``, frozen for the duration of the batch."""
         if self._value is None:
@@ -208,17 +220,86 @@ class RunningMeanDispersion:
 
 @dataclass(frozen=True)
 class GroupOutcome:
-    """Per-group rewards and the telemetry the audit plan requires."""
+    """Per-group rewards and the telemetry the audit plan requires.
+
+    Band degeneracy is reported three ways because they answer different
+    questions and conflating them would misinform decision D-05, whose revisit
+    trigger is a rate:
+
+    * ``singleton_bands`` -- bands holding exactly one rollout. Unavoidable.
+    * ``tied_bands`` -- bands holding several rollouts whose RM scores are all
+      equal. Means the RM failed to discriminate, which is a different problem.
+    * ``pinned_rollouts`` -- rollouts actually forced to ``singleton_z`` by
+      either case. This is the quantity D-05's threshold should be read against.
+
+    Fields requiring RM scores are None when the arm does not use them.
+
+    ``sigma_u`` is the dispersion of the RM signal per decision D-02: raw RM
+    scores under the default ``sigma_on_raw_rm=True``, which is well defined for
+    every arm. Under ``sigma_on_raw_rm=False`` it is the dispersion of ``r_hat``,
+    whose meaning is arm-dependent and only comparable within one arm.
+    """
 
     r_rule: np.ndarray
-    r_rm: np.ndarray
     r_hat: np.ndarray
     r_final: np.ndarray
-    sigma_u: float
     weight: float
     is_uniform: bool
     n_correct: int
-    singleton_bands: int = 0
+    r_rm: np.ndarray | None = None
+    sigma_u: float | None = None
+    singleton_bands: int | None = None
+    tied_bands: int | None = None
+    pinned_rollouts: int | None = None
+
+
+def build_outcome(
+    r_rule: np.ndarray,
+    r_rm: np.ndarray | None,
+    r_hat: np.ndarray,
+    weight: float,
+    cfg: HeroConfig,
+) -> GroupOutcome:
+    """Assemble a :class:`GroupOutcome`, the single place telemetry is derived.
+
+    Arrays are copied, so a caller mutating its inputs afterwards cannot
+    retroactively alter a recorded outcome -- the frozen dataclass otherwise
+    promises an immutability it does not have.
+    """
+    labels = np.array(r_rule, copy=True)
+    n_correct = int((labels == 1).sum())
+    scores = None if r_rm is None else np.array(r_rm, dtype=float, copy=True)
+
+    singleton_bands = tied_bands = pinned = None
+    sigma_u = None
+    if scores is not None:
+        singleton_bands = tied_bands = pinned = 0
+        for label in (0, 1):
+            m = labels == label
+            size = int(m.sum())
+            if size == 0:
+                continue
+            if size == 1:
+                singleton_bands += 1
+                pinned += 1
+            elif scores[m].max() == scores[m].min():
+                tied_bands += 1
+                pinned += size
+        sigma_u = group_dispersion(scores, r_hat, cfg)
+
+    return GroupOutcome(
+        r_rule=labels,
+        r_hat=np.array(r_hat, copy=True),
+        r_final=weight * np.asarray(r_hat, dtype=float),
+        weight=weight,
+        is_uniform=n_correct in (0, labels.size),
+        n_correct=n_correct,
+        r_rm=scores,
+        sigma_u=sigma_u,
+        singleton_bands=singleton_bands,
+        tied_bands=tied_bands,
+        pinned_rollouts=pinned,
+    )
 
 
 def shape_group(
@@ -229,6 +310,9 @@ def shape_group(
 ) -> GroupOutcome:
     """Full HERO reward for one prompt group (Eq. 3 -> 4 -> 5).
 
+    The single implementation of HERO's shaping; ``hero.rewards`` dispatches its
+    HERO arms here rather than reimplementing Eq. 3-5.
+
     Args:
         r_rule: Verifier labels in {0, 1}.
         r_rm: Raw RM scores.
@@ -238,28 +322,12 @@ def shape_group(
             correct behaviour for the first batch, before warm-up.
     """
     r_hat = stratified_normalise(r_rule, r_rm, cfg)
-    sigma_u = group_dispersion(r_rm, r_hat, cfg)
-    weight = 1.0 if sigma_bar is None else variance_weight(sigma_u, sigma_bar, cfg)
-
-    labels = np.asarray(r_rule)
-    scores = np.asarray(r_rm, dtype=float)
-    singletons = sum(
-        1
-        for label in (0, 1)
-        if (m := labels == label).any() and scores[m].max() == scores[m].min()
+    weight = (
+        1.0
+        if sigma_bar is None
+        else variance_weight(group_dispersion(r_rm, r_hat, cfg), sigma_bar, cfg)
     )
-    n_correct = int((labels == 1).sum())
-    return GroupOutcome(
-        r_rule=labels,
-        r_rm=scores,
-        r_hat=r_hat,
-        r_final=weight * r_hat,
-        sigma_u=sigma_u,
-        weight=weight,
-        is_uniform=n_correct in (0, labels.size),
-        n_correct=n_correct,
-        singleton_bands=singletons,
-    )
+    return build_outcome(r_rule, r_rm, r_hat, weight, cfg)
 
 
 def grpo_advantage(
@@ -274,6 +342,12 @@ def grpo_advantage(
     advantage equal the raw reward. That case cannot fire at n >= 2 but would
     silently distort any experiment that filtered a group down to one member.
 
+    Fidelity assumption: verl works on token-level reward tensors and reduces
+    them with ``sum(dim=-1)`` over the response mask. This function takes the
+    already-reduced sequence-level reward, which is exactly equivalent for
+    outcome rewards placed on the final token -- the regime HERO operates in.
+    Anything that spreads reward across tokens invalidates the comparison.
+
     Args:
         rewards: Sequence-level rewards for one group, shape (n,).
         norm_by_std: verl's ``algorithm.norm_adv_by_std_in_grpo``. True is
@@ -283,9 +357,16 @@ def grpo_advantage(
     rewards = np.asarray(rewards, dtype=float)
     if rewards.ndim != 1 or rewards.size == 0:
         raise ValueError(f"expected a non-empty 1-D group; got shape {rewards.shape}")
+    if epsilon < 0.0:
+        raise ValueError(f"epsilon must be non-negative; got {epsilon}")
     if rewards.size == 1:
         return rewards.copy()
     centred = rewards - rewards.mean()
     if not norm_by_std:
         return centred
-    return centred / (rewards.std(ddof=1) + epsilon)
+    denominator = rewards.std(ddof=1) + epsilon
+    if denominator == 0.0:
+        # Only reachable with epsilon=0 on a constant group, which verl's 1e-6
+        # default rules out. Zero is the correct limit: no within-group signal.
+        return np.zeros_like(centred)
+    return centred / denominator

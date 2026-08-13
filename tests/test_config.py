@@ -44,6 +44,21 @@ class TestRegistry:
     def test_remote_models_are_flagged_for_budgeting(self):
         assert resolve("gpt-4o").serving is ServingMode.REMOTE_API
 
+    def test_closed_models_report_unknown_size_rather_than_zero(self):
+        """A 0.0 parameter count would silently understate compute planning."""
+        assert resolve("gpt-4o").params_b is None
+        assert all(
+            spec.params_b is not None
+            for spec in all_specs()
+            if spec.serving is not ServingMode.REMOTE_API
+        )
+
+    def test_hf_ids_are_namespaced(self):
+        """Every locally-run model needs an org/name id to be resolvable."""
+        for spec in all_specs():
+            if spec.serving is not ServingMode.REMOTE_API:
+                assert spec.hf_id.count("/") == 1, spec.key
+
 
 class TestGrpoConfig:
     def test_paper_defaults(self):
@@ -66,11 +81,20 @@ class TestGrpoConfig:
             ({"train_batch_prompts": 500}, "divisible"),
             ({"clip_ratio_low": 0.3}, "clip_low < clip_high"),
             ({"loss_agg_mode": "mean"}, "loss_agg_mode"),
+            ({"learning_rate": 0.0}, "learning_rate"),
+            ({"epochs": 0}, "epochs"),
+            ({"temperature": 0.0}, "temperature"),
+            ({"kl_loss_coef": -0.1}, "kl_loss_coef"),
+            ({"entropy_coef": -1.0}, "entropy_coef"),
         ],
     )
     def test_invalid_settings_rejected(self, kwargs, match):
         with pytest.raises(ValueError, match=match):
             GrpoConfig(**kwargs)
+
+    def test_unknown_loss_mode_lists_alternatives(self):
+        with pytest.raises(ValueError, match="expected one of"):
+            GrpoConfig(loss_agg_mode="token-sum")
 
 
 class TestDataConfig:
@@ -140,9 +164,26 @@ class TestStepAccounting:
         cfg = ExperimentConfig(name="paper", policy="qwen3-4b")
         assert cfg.total_generations == 60 * 4096
 
-    def test_small_prompt_set_still_yields_one_batch_per_epoch(self):
-        cfg = ExperimentConfig(name="tiny", data=DataConfig(n_prompts=100))
-        assert cfg.rollout_batches_per_epoch == 1
+    def test_prompt_set_smaller_than_a_batch_is_rejected(self):
+        """Under drop_last this trains on nothing; reporting 1 batch would hide it."""
+        with pytest.raises(ValueError, match="smaller than one rollout batch"):
+            ExperimentConfig(name="tiny", data=DataConfig(n_prompts=100))
+
+    def test_smoke_tier_scales_the_batch_down_instead(self):
+        cfg = ExperimentConfig(
+            name="smoke",
+            policy="qwen3-0.6b",
+            data=DataConfig(n_prompts=100),
+            grpo=GrpoConfig(train_batch_prompts=32, mini_batch_prompts=8, epochs=1),
+        )
+        assert cfg.rollout_batches_per_epoch == 3
+        assert cfg.grpo.gradient_steps_per_rollout_batch == 4
+        assert cfg.total_gradient_steps == 12
+
+    def test_remainder_is_dropped_not_rounded_up(self):
+        """2000 / 512 = 3.9 -> 3 batches, matching drop_last semantics."""
+        cfg = ExperimentConfig(name="paper", policy="qwen3-4b")
+        assert cfg.rollout_batches_per_epoch == 3
 
 
 class TestDigest:

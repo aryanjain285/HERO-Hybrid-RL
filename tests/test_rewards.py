@@ -117,6 +117,37 @@ class TestGatedFallback:
         assert not np.allclose(gated_m.r_final, hero_m.r_final)
 
 
+class TestSignalRequirements:
+    """An arm must not demand a signal it declares it does not need."""
+
+    def test_verifier_only_runs_without_an_rm(self):
+        """Otherwise the cheapest baseline would require standing up an RM server."""
+        out = compute_group_reward(MIXED[0], None, arm(RewardArm.VERIFIER_ONLY), None)
+        np.testing.assert_array_equal(out.r_final, MIXED[0].astype(float))
+        assert out.r_rm is None
+        assert out.sigma_u is None
+        assert out.pinned_rollouts is None
+
+    def test_verifier_only_still_reports_band_occupancy(self):
+        """Group composition is the telemetry the audit needs from every arm."""
+        out = compute_group_reward(ALL_WRONG[0], None, arm(RewardArm.VERIFIER_ONLY), None)
+        assert out.is_uniform and out.n_correct == 0
+
+    @pytest.mark.parametrize(
+        "name",
+        [a for a in RewardArm if a is not RewardArm.VERIFIER_ONLY],
+    )
+    def test_dense_arms_reject_a_missing_rm(self, name):
+        with pytest.raises(ValueError, match="requires r_rm"):
+            compute_group_reward(MIXED[0], None, arm(name), 1.0)
+
+    def test_rm_only_keeps_verifier_labels_for_telemetry(self):
+        """RM_ONLY ignores labels in the reward but still reports composition."""
+        out = compute_group_reward(*MIXED, arm(RewardArm.RM_ONLY), None)
+        assert out.n_correct == 2
+        np.testing.assert_array_equal(out.r_final, MIXED[1])
+
+
 class TestSharedContract:
     @pytest.mark.parametrize("name", list(RewardArm))
     def test_every_arm_returns_well_formed_telemetry(self, name):
@@ -126,6 +157,23 @@ class TestSharedContract:
         assert out.n_correct == 2
         assert out.is_uniform is False
         assert np.isfinite(out.sigma_u)
+
+    @pytest.mark.parametrize("name", list(RewardArm))
+    def test_no_arm_mutates_its_inputs(self, name):
+        r_rule, r_rm = MIXED[0].copy(), MIXED[1].copy()
+        compute_group_reward(r_rule, r_rm, arm(name), 1.0)
+        np.testing.assert_array_equal(r_rule, MIXED[0])
+        np.testing.assert_array_equal(r_rm, MIXED[1])
+
+    def test_hero_arm_matches_the_core_implementation(self):
+        """Guards against the dispatcher and hero.core drifting apart."""
+        from hero.core import shape_group
+
+        direct = shape_group(*MIXED, arm(RewardArm.HERO).hero, 1.0)
+        via_arm = compute_group_reward(*MIXED, arm(RewardArm.HERO), 1.0)
+        np.testing.assert_allclose(via_arm.r_final, direct.r_final)
+        assert via_arm.weight == direct.weight
+        assert via_arm.sigma_u == direct.sigma_u
 
     @pytest.mark.parametrize("name", list(RewardArm))
     def test_uniform_flag_is_set_for_uniform_groups(self, name):

@@ -17,6 +17,13 @@ from hero.registry import ModelRole, resolve
 from hero.rewards import RewardArm, RewardArmConfig
 
 
+LOSS_AGG_MODES: frozenset[str] = frozenset(
+    {"token-mean", "seq-mean-token-mean", "seq-mean-token-sum"}
+)
+"""verl loss aggregation modes, verified against its docs at read time.
+Re-check against the pinned commit before M1; verl has added modes over time."""
+
+
 class TrainingRegime(StrEnum):
     """Which of the paper's three training sets a run uses."""
 
@@ -103,6 +110,19 @@ class GrpoConfig:
                 f"GRPO needs at least 2 rollouts per prompt for a group-relative "
                 f"advantage; got {self.rollouts_per_prompt}"
             )
+        if self.learning_rate <= 0.0:
+            raise ValueError(f"learning_rate must be positive; got {self.learning_rate}")
+        if self.epochs <= 0:
+            raise ValueError(f"epochs must be positive; got {self.epochs}")
+        if self.temperature <= 0.0:
+            raise ValueError(
+                f"temperature must be positive; GRPO needs stochastic rollouts to "
+                f"produce within-group variation, got {self.temperature}"
+            )
+        if self.kl_loss_coef < 0.0:
+            raise ValueError(f"kl_loss_coef must be >= 0; got {self.kl_loss_coef}")
+        if self.entropy_coef < 0.0:
+            raise ValueError(f"entropy_coef must be >= 0; got {self.entropy_coef}")
         if self.train_batch_prompts % self.mini_batch_prompts != 0:
             raise ValueError(
                 f"train_batch_prompts {self.train_batch_prompts} must be divisible "
@@ -113,9 +133,11 @@ class GrpoConfig:
                 f"need 0 < clip_low < clip_high; got "
                 f"({self.clip_ratio_low}, {self.clip_ratio_high})"
             )
-        if self.loss_agg_mode not in ("token-mean", "seq-mean-token-mean",
-                                      "seq-mean-token-sum"):
-            raise ValueError(f"unknown loss_agg_mode {self.loss_agg_mode!r}")
+        if self.loss_agg_mode not in LOSS_AGG_MODES:
+            raise ValueError(
+                f"unknown loss_agg_mode {self.loss_agg_mode!r}; "
+                f"expected one of {sorted(LOSS_AGG_MODES)}"
+            )
 
     @property
     def gradient_steps_per_rollout_batch(self) -> int:
@@ -167,6 +189,12 @@ class ExperimentConfig:
             raise ValueError(
                 f"sigma_bar_momentum must lie in [0, 1); got {self.sigma_bar_momentum}"
             )
+        if self.data.n_prompts < self.grpo.train_batch_prompts:
+            raise ValueError(
+                f"prompt set ({self.data.n_prompts}) is smaller than one rollout "
+                f"batch ({self.grpo.train_batch_prompts}); under drop_last this "
+                "yields no training steps. Lower grpo.train_batch_prompts."
+            )
 
     @property
     def rollouts_per_batch(self) -> int:
@@ -175,8 +203,14 @@ class ExperimentConfig:
 
     @property
     def rollout_batches_per_epoch(self) -> int:
-        """Rollout batches per pass over the prompt set, dropping any remainder."""
-        return max(1, self.data.n_prompts // self.grpo.train_batch_prompts)
+        """Rollout batches per pass over the prompt set, dropping the remainder.
+
+        Assumes ``drop_last`` semantics: 2,000 prompts at batch 512 gives 3
+        batches per epoch, not 3.9. A config whose prompt set is smaller than one
+        batch is rejected at construction rather than silently reported as 1,
+        because under ``drop_last`` it would yield no batches at all.
+        """
+        return self.data.n_prompts // self.grpo.train_batch_prompts
 
     @property
     def total_rollout_batches(self) -> int:
