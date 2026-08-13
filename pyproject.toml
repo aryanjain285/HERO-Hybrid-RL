@@ -3,7 +3,14 @@ name = "hero-hybrid-rl"
 version = "0.1.0"
 description = "Reproduction, audit, and extension of HERO (ICLR 2026)"
 requires-python = ">=3.11"
-dependencies = ["numpy>=1.26"]
+# Imports of sympy and huggingface_hub are lazy, so `import hero` stays cheap, but
+# both are required for the verifier and data paths to function rather than
+# degrade. A clean clone must be able to run every CPU stage without extras.
+dependencies = [
+    "numpy>=1.26",
+    "sympy>=1.12",
+    "huggingface_hub>=0.23",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
@@ -18,4 +25,9 @@ packages = ["hero"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
-addopts = "-q --strict-markers"
+# faulthandler is disabled because SymbolicVerifier spawns a subprocess, and on
+# Windows the spawn latency triggers a thread dump that clutters every pipeline
+# log without indicating a fault. Hang protection for the SymPy risk in the PRD
+# risk register comes from SymbolicVerifier's explicit timeout, which is a
+# stronger guarantee than a traceback dump.
+addopts = "-q --strict-markers -p no:faulthandler"

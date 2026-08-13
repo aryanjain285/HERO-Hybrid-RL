@@ -1,0 +1,2635 @@
+uid,sample,reference,response,judge_a,judge_b,disagree,human_verdict,notes
+test/algebra/1349.json,1,\text{Evelyn},"To determine which student has the greatest average speed, we need to calculate the total distance each student runs and the time it takes for them to complete their run. The average speed is then given by the formula:
+
+\[ \text{Average Speed} = \frac{\text{Distance}}{\text{Time}} \]
+
+From the graph, we can see that:
+- Evelyn ran 4.5 units of distance in 1.25 units of time.
+- Briana ran 2.2 units of distance in 2.5 units of time.
+- Carla ran 5.2 units of distance in 4.25 units of time.
+- Debra ran 2.8 units of distance in 5.6 units of time.
+- Angela ran 1.4 units of distance in 6.8 units of time.
+
+First, we calculate the average speed for each student:
+
+1. **Evelyn's Average Speed:**
+   \[
+   \text{Average Speed}_{\text{Evelyn}} = \frac{\text{Distance}_\text{Evelyn}}{\text{Time}_\text{Evelyn}} = \frac{4.5}{1.25} = 3.6 \text{ units per unit time}
+   \]
+
+2. **Briana's Average Speed:**
+   \[
+   \text{Average Speed}_{\text{Briana}} = \frac{\text{Distance}_\text{Briana}}{\text{Time}_\text{Briana}} = \frac{2.2}{2.5} = 0.88 \text{ units per unit time}
+   \]
+
+3. **Carla's Average Speed:**
+   \[
+   \text{Average Speed}_{\text{Carla}} = \frac{\text{Distance}_\text{Carla}}{\text{Time}_\text{Carla}} = \frac{5.2}{4.25} = 1.22 \text{ units per unit time}
+   \]
+
+4. **Debra's Average Speed:**
+   \[
+   \text{Average Speed}_{\text{Debra}} = \frac{\text{Distance}_\text{Debra}}{\text{Time}_\text{Debra}} = \frac{2.8}{5.6} = 0.5 \text{ units per unit time}
+   \]
+
+5. **Angela's Average Speed:**
+   \[
+   \text{Average Speed}_{\text{Angela}} = \frac{\text{Distance}_\text{Angela}}{\text{Time}_\text{Angela}} = \frac{1.4}{6.8} = 0.21 \text{ units per unit time}
+   \]
+
+Now, we compare the average speeds:
+- Evelyn: \(3.6\) units per unit time
+- Briana: \(0.88\) units per unit time
+- Carla: \(1.22\) units per unit time
+- Debra: \(0.5\) units per unit time
+- Angela: \(0.21\) units per unit time
+
+The student with the greatest average speed is Evelyn, who ran at a speed of 3.6 units per unit time.
+
+Thus, the final answer is",False,True,True,,
+test/algebra/2036.json,1,3\sqrt{13},"To find the distance between two points $(x_1, y_1)$ and $(x_2, y_2)$, we use the Pythagorean theorem: $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.
+
+For the given points $(2, -6)$ and $(-4, 3)$:
+- The difference in $x$ coordinates is $-4 - 2 = -6$.
+- The difference in $y$ coordinates is $3 - (-6) = 9$.
+
+Substituting these values into the formula gives us $\sqrt{(-6)^2 + 9^2} = \sqrt{36 + 81} = \sqrt{117}$.
+
+Therefore, the distance between the points $(2, -6)$ and $(-4, 3)$ is $\boxed{\sqrt{117}}$.",False,True,True,,
+test/algebra/2193.json,0,x=5,"To solve the equation \( x = \sqrt{11 - 2x} + 4 \), we will follow these steps:
+
+1. **Isolate the square root term**: First, we need to isolate the square root on one side of the equation.
+   \[
+   x - 4 = \sqrt{11 - 2x}
+   \]
+
+2. **Square both sides**: To eliminate the square root, we square both sides of the equation.
+   \[
+   (x - 4)^2 = (\sqrt{11 - 2x})^2
+   \]
+   Simplifying the right side gives:
+   \[
+   x^2 - 8x + 16 = 11 - 2x
+   \]
+
+3. **Rearrange the equation**: Next, we need to move all terms involving \( x \) to one side of the equation and constant terms to the other side.
+   \[
+   x^2 - 8x + 2x + 16 - 11 = 0
+   \]
+   Simplifying this gives:
+   \[
+   x^2 - 6x + 5 = 0
+   \]
+
+4. **Factor the quadratic equation**: We can factor the quadratic equation \( x^2 - 6x + 5 = 0 \).
+   \[
+   (x - 1)(x - 5) = 0
+   \]
+   Setting each factor equal to zero gives:
+   \[
+   x - 1 = 0 \quad \text{or} \quad x - 5 = 0
+   \]
+   So, the solutions are:
+   \[
+   x = 1 \quad \text{or} \quad x = 5
+   \]
+
+5. **Check for extraneous solutions**: We need to check if these solutions satisfy the original equation \( x = \sqrt{11 - 2x} + 4 \).
+
+   For \( x = 1 \):
+   \[
+   1 = \sqrt{11 - 2(1)} + 4
+   \]
+   Simplifying inside the square root:
+   \[
+   1 = \sqrt{9} + 4
+   \]
+   Since \( \sqrt{9} = 3 \), we get:
+   \[
+   1 = 3 + 4 \quad \text{(False)}
+   \]
+   So, \( x = 1 \) is not a solution.
+
+   For \( x = 5 \):
+   \[
+   5 = \sqrt{11 - 2(5)} + 4
+   \]
+   Simplifying inside the square root:
+   \[
+   5 = \sqrt{1} + 4
+   \]
+   Since \( \sqrt{1} = 1 \), we get:
+   \[
+   5 = 1 + 4 \quad \text{(True)}
+   \]
+   So, \( x = 5 \) is a solution.
+
+Therefore, the only value of \( x \) that satisfies the equation is \( x = 5 \).
+
+The final answer is \(\boxed{5}\).",False,True,True,,
+test/algebra/2427.json,1,10,"Let's denote the annual interest rate by \( r \) (in decimal form). The worker makes three deposits each year into an account with an initial principal of $20{,}000$.
+
+After 1 year:
+- Interest earned: \( 20{,}000 \times r = 20{,}000r \)
+- Total amount after 1 year: \( 20{,}000 + 20{,}000r \)
+
+After 2 years:
+- Interest earned on the new total: \( (20{,}000 + 20{,}000r) \times r = 20{,}000r + 20{,}000r^2 \)
+- Total amount after 2 years: \( (20{,}000 + 20{,}000r) + 20{,}000r + 20{,}000r^2 = 20{,}000(1 + r)^2 \)
+
+After 3 years:
+- Interest earned on the new total: \( 20{,}000(1 + r)^2 \times r = 20{,}000r(1 + r)^2 \)
+- Total amount after 3 years: \( 20{,}000(1 + r)^2 + 20{,}000r(1 + r)^2 = 20{,}000((1 + r)^2)(1 + r) = 20{,}000(1 + r)^3 \)
+
+We want this amount to be at least $66{,}200$. Therefore:
+\[
+20{,}000(1 + r)^3 \geq 66{,}200
+\]
+
+Divide both sides by \( 20{,}000 \):
+\[
+(1 + r)^3 \geq \frac{66{,}200}{20{,}000}
+\]
+\[
+(1 + r)^3 \geq 3.31
+\]
+
+Take the cube root of both sides:
+\[
+1 + r \geq \sqrt[3]{3.31}
+\]
+
+Calculate \( \sqrt[3]{3.31} \):
+\[
+\sqrt[3]{3.31} \approx 1.476
+\]
+
+Therefore, we have:
+\[
+1 + r \geq 1.476
+\]
+\[
+r \geq 0.476
+\]
+
+Convert the decimal to a percentage:
+\[
+r = 0.476 \times 100\% = 47.6\%
+\]
+
+Thus, the minimal compound interest rate required is:
+\boxed{47.6}",True,False,True,,
+test/algebra/2584.json,1,\frac{14}{3},"To find the value of \( f(-2) + f(-1) + f(0) \), we first need to determine the values of \( f(-2) \), \( f(-1) \), and \( f(0) \) individually.
+
+The function is given by:
+\[ f(x) = \frac{3x-2}{x-2} \]
+
+### Step 1: Calculate \( f(-2) \)
+Substitute \( x = -2 \) into the function:
+\[ f(-2) = \frac{3(-2) - 2}{-2 - 2} = \frac{-6 - 2}{-4} = \frac{-8}{-4} = \frac{8}{4} = 2 \]
+
+### Step 2: Calculate \( f(-1) \)
+Substitute \( x = -1 \) into the function:
+\[ f(-1) = \frac{3(-1) - 2}{-1 - 2} = \frac{-3 - 2}{-3} = \frac{-5}{-3} = \frac{5}{3} \]
+
+### Step 3: Calculate \( f(0) \)
+Substitute \( x = 0 \) into the function:
+\[ f(0) = \frac{3(0) - 2}{0 - 2} = \frac{-2}{-2} = \frac{2}{-2} = \frac{-2}{1} = -2 \]
+
+### Step 4: Sum the values
+Now, we add \( f(-2) \), \( f(-1) \), and \( f(0) \):
+\[ f(-2) + f(-1) + f(0) = 2 + \frac{5}{3} - 2 \]
+
+First, simplify \( 2 - 2 \):
+\[ 2 - 2 = 0 \]
+So the expression becomes:
+\[ 0 + \frac{5}{3} = \frac{5}{3} \]
+
+### Final Answer
+The value of \( f(-2) + f(-1) + f(0) \) is \(\boxed{\frac{5}{3}}\).",True,False,True,,
+test/intermediate_algebra/1388.json,1,"1,-2","Let's start with the given functional equation:
+
+\[ f(x) + f(y) = f(x + y) - xy - 1 \]
+
+We are also given that \( f(1) = 1 \). To find a general form for \( f(n) \), let's consider specific values of \( x \) and \( y \).
+
+First, let \( x = 0 \):
+\[ f(0) + f(y) = f(y) - 0 \cdot y - 1 \]
+This simplifies to:
+\[ f(0) = -1 \]
+
+Now, let's consider the equation for general values of \( x \) and \( y \). We can rewrite it as:
+\[ f(x) + f(y) = f(x + y) - xy - 1 \]
+
+To find a pattern, let's try \( y = 0 \):
+\[ f(x) + f(0) = f(x + 0) - x \cdot 0 - 1 \]
+This simplifies to:
+\[ f(x) + f(0) = f(x) - 1 \]
+
+Since we know \( f(0) = -1 \), substitute it in:
+\[ f(x) - 1 = f(x) - 1 \]
+
+Now, let's test if there is a specific form for \( f(n) \). Assume \( f(n) = n + c \) and check the consistency with the original equation. Substitute into the functional equation:
+\[ (n + c) + (m + c) = (n + m + c) - nm - 1 \]
+Simplify:
+\[ n + m + 2c = n + m + c - nm - 1 \]
+
+By comparing both sides, we get:
+\[ 2c = c - nm - 1 \]
+\[ c = -nm - 1 \]
+
+Since \( f(1) = 1 \):
+\[ f(1) = 1 + c = 1 \]
+\[ c = 0 \]
+
+Thus, the only solution is \( f(n) = n \).
+
+Therefore, the integer value of \( n \) such that \( f(n) = n \) is:
+\[
+\boxed{1}
+\]",True,False,True,,
+test/intermediate_algebra/1994.json,0,p - q,"To solve the given problem, we start by examining the expression for \( p \) and \( q \):
+
+\[ p = \sum_{k=1}^\infty \frac{1}{k^2} \quad \text{and} \quad q = \sum_{k=1}^\infty \frac{1}{k^3}. \]
+
+We need to express the double sum
+
+\[ \sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3} \]
+
+in terms of \( p \) and \( q \).
+
+First, consider the inner sum over \( k \):
+
+\[ \sum_{k=1}^\infty \frac{1}{(j+k)^3}. \]
+
+This can be rewritten as:
+
+\[ \sum_{k=1}^\infty \frac{1}{(j+k)^3} = p - \sum_{m=j+1}^\infty \frac{1}{m^3}, \]
+
+where the subtraction term \( p \) is the sum of the reciprocals from 1 to infinity minus those over \( m > j+1 \).
+
+Next, we substitute this back into our double sum:
+
+\[ \sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3} = \sum_{j=1}^\infty p - \sum_{m=j+1}^\infty \frac{p - q + q}{m^3}. \]
+
+Simplifying the second sum, we get:
+
+\[ \sum_{j=1}^\infty p - \left( p - q \right) \sum_{k=j+1}^\infty \frac{1}{k^3} = p - (p - q) q. \]
+
+Thus,
+
+\[ \sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3} = p - pq + q^2 = p(1-q) + q^2. \]
+
+Therefore, the final answer is:
+
+\[
+\boxed{p(1-q) + q^2}
+\]",True,False,True,,
+test/intermediate_algebra/1994.json,1,p - q,"To find a way to express the double sum \(\sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3}\) in terms of \(p\) and \(q\), we start by analyzing each sum separately.
+
+First, consider the sum \(q = \sum_{k=1}^\infty \frac{1}{k^3}\). This is a known series that sums to \(\zeta(3)\).
+
+Next, let's look at the sum \(p = \sum_{k=1}^\infty \frac{1}{k^2}\), which is also a well-known series and sums to \(\frac{\pi^2}{6}\).
+
+Now, we need to express the double sum in terms of these two known sums. Notice that the expression \(\sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3}\) can be interpreted using a similar idea as the generating function approach for \(q\).
+
+Consider the generating function for \(p\):
+\[ p = \sum_{k=1}^\infty \frac{1}{k^2} = 1 + \frac{1}{2^2} + \frac{1}{3^2} + \cdots. \]
+Similarly, consider the generating function for \(q\):
+\[ q = \sum_{k=1}^\infty \frac{1}{k^3} = 1 + \frac{1}{2^3} + \frac{1}{3^3} + \cdots. \]
+
+We can rewrite the double sum in terms of these generating functions:
+\[ \sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3} = \sum_{j=1}^\infty \sum_{k=1}^\infty \left( \frac{1}{j^3} + \frac{1}{k^3} + \frac{1}{(j+k)^3} - \frac{1}{j^2 k^2} \right). \]
+However, the term \(\frac{1}{j^2 k^2}\) is not present in either \(p\) or \(q\), so it does not contribute to our sum. We are left with:
+\[ \sum_{j=1}^\infty \sum_{k=1}^\infty \frac{1}{(j+k)^3} = q + p - 2p = p + q. \]
+
+Thus, the double sum can be written in terms of \(p\) and \(q\) as:
+\[ \boxed{p + q}. \]",True,False,True,,
+test/number_theory/1032.json,0,2220,"To find the least positive integer multiple of 30 that can be written using only the digits 0 and 2, we need to ensure that the number meets the following criteria:
+1. It is a multiple of \(2^2 = 4\).
+2. It is a multiple of 5.
+3. It is a multiple of 3.
+
+First, let's check the divisibility by 5. The only way a number can be divisible by 5 is if it ends in either 0 or 5. Since we cannot use 0 and we need to end in one of these digits, there is no digit combination that will make it divisible by 5 using just the digits 2 and 0/5 is not possible.
+
+Next, let's check the divisibility by 4. A number is divisible by 4 if its last two digits form a number that is divisible by 4. Since we cannot use 0 or 5, we need to consider combinations of 2s.
+- The only combination that works for our purpose is 22 because \(22 \div 4 = 5.5\), but since we can't have half digits in our final number, this needs adjustment.
+
+Now let's check the divisibility by 3. A number is divisible by 3 if the sum of its digits is a multiple of 3. The only way to ensure that the sum is a multiple of 3 using just 2s and 0 is if we can form numbers whose digit sums are multiples of 3.
+- We need to find the smallest repeating pattern of length 10 (since \(10 \times 4 = 40\) which is not needed but helps in forming the required sequence). The sequence should be such that the sum of digits repeats every 10 digits. 
+
+Let's construct a valid number: 
+- Start with the smallest possible repeating pattern, ensuring it ends in 2 to meet divisibility by 5.
+- We need to ensure the digit sums are multiples of 3.
+
+One way to achieve this is:
+1. Start with the smallest sequence that meets all conditions: ""222222222"" which has a sum of \(2 \times 9 = 18\), divisible by 3.
+- This sequence can be repeated, and we need to adjust it slightly to fit within our requirement.
+
+Let's consider:
+- The smallest repeating pattern that meets all criteria is ""222222222"" which is a multiple of both 4 and 5 when ending in 2. It also has a sum of 18, divisible by 3.
+- This number can be adjusted slightly to fit within the requirement.
+
+Finally, we need to ensure the smallest positive integer that fits all these criteria:
+- The sequence ""222222222"" repeated multiple times until it meets the divisibility requirements and forms a valid repeating pattern of length 10.
+- The smallest such number is found by checking the smallest combinations that meet all conditions, which is ""222222222"".
+
+Thus, the least positive integer multiple of 30 that can be written with only the digits 0 and 2 is:
+\[
+\boxed{222222222}
+\]",True,False,True,,
+test/precalculus/1303.json,1,\sqrt{51},"Given that $\sin D = 0.7$ and $DE = 7$, we can determine the length of $DF$ using the trigonometric relationship in a right triangle.
+
+In a right triangle with one angle equal to $D$, where $D$ is opposite side $EF$ (which is $DE$), we have $\sin D = \frac{DE}{DF}$, or equivalently:
+
+$$
+\sin D = \frac{\text{opposite}}{\text{hypotenuse}}
+$$
+
+Substituting the given values, we get:
+$$
+0.7 = \frac{7}{DF}
+$$
+
+Solving for $DF$, we multiply both sides by $DF$ and then divide both sides by 0.7 to isolate $DF$:
+
+$$
+DF = \frac{7}{0.7} = 10
+$$
+
+Thus, the length of $DF$ is $10$. Since $D$ lies on the same line as $E$, we can conclude that $DE = DF$, so $DE = 10$.
+
+Therefore, the answer is $\boxed{10}$.
+
+This problem tests understanding of trigonometric relationships in right triangles and how to apply them to solve for unknown lengths.",True,False,True,,
+test/algebra/1098.json,0,6+9i,"To solve the expression \((1 + 2i)6 - 3i\), we will follow these steps:
+
+1. Distribute the multiplication across the parentheses.
+2. Combine like terms.
+
+Let's start with the distribution step:
+
+\[
+(1 + 2i)6 = 1 \cdot 6 + 2i \cdot 6
+\]
+
+This simplifies to:
+
+\[
+6 + 12i
+\]
+
+Now, we substitute this back into the original expression:
+
+\[
+6 + 12i - 3i
+\]
+
+Next, we combine the like terms (the real parts and the imaginary parts):
+
+The real part is \(6\) (from \(6\)), and the imaginary part is \(-3i + 12i = 9i\).
+
+So, the expression simplifies to:
+
+\[
+6 + 9i
+\]
+
+Therefore, the final answer is:
+
+\boxed{6 + 9i}",True,True,False,,
+test/algebra/1098.json,1,6+9i,"Let's break down and evaluate the expression $(1+2i)\cdot 6 - 3i$ step by step:
+
+1. First, distribute $6$ to each term within the parenthesis:
+   \[ (1 + 2i) \cdot 6 = 6 \cdot 1 + 6 \cdot 2i \]
+
+2. Perform the multiplications:
+   \[ = 6 + 12i \]
+
+3. Now, subtract $3i$ from the result obtained in step 2:
+   \[ (6 + 12i) - 3i \]
+
+4. Simplify by combining like terms:
+   \[ = 6 + (12i - 3i) \]
+   \[ = 6 + 9i \]
+
+Therefore, the final answer is $6 + 9i$, and we encapsulate this in the boxed format:
+
+\[\boxed{6 + 9i}\]",True,True,False,,
+test/algebra/1349.json,0,\text{Evelyn},"To determine which student has the greatest average speed, we need to calculate the average speed for each runner based on the given graph. The average speed is calculated by dividing the total distance traveled by the total time taken.
+
+From the graph:
+- Evelyn ran from (1.25, 4.8) to (7, 0), so she covered a horizontal distance of \(7 - 1.25 = 5.75\) units.
+- Briana ran from (2.5, 2.2) to (5.6, 2.8), so she covered a vertical distance of \(5.6 - 2.5 = 3.1\) units.
+- Carla ran from (4.25, 5.2) to (7, 0), so she covered a horizontal distance of \(7 - 4.25 = 2.75\) units.
+- Debra ran from (6.8, 1.4) to (9, 0), but since the graph doesn't show her exact position for time 9, we will assume she stopped at this point.
+
+Next, we need to estimate the total distance and total time:
+- Total horizontal distance: \(5.75 + 2.75 = 8.5\) units.
+- Total vertical distance: \(3.1\) units (Briana's run).
+
+To find the average speed, we divide the total distance by the total time.
+
+**Evelyn:**
+- Horizontal distance: 5.75 units
+- Vertical distance: 0 units
+
+Total distance for Evelyn = 5.75 + 0 = 5.75 units
+
+Since there is no vertical distance in her run, we can assume she stopped after a certain time and then ran horizontally to the next point (which would be at time t2). The total time taken by Evelyn is the difference between her two points on the x-axis:
+
+- Time from (1.25, 4.8) to (7, 0): \(7 - 1.25 = 5.75\) units horizontally
+- We assume she stopped at a vertical distance of 0 units and ran for an additional time to reach her final position.
+
+Since the problem doesn't provide Evelyn's exact stop point, we can approximate that if she stopped after reaching (7, 0), then her total run time is approximately \(5.75\) units horizontally plus any vertical component which would be negligible in this context as shown by the graph.
+
+So, let's calculate the average speed for each runner:
+
+**Evelyn:**
+- Average Speed = \(\frac{\text{Total Distance}}{\text{Total Time}}\)
+- Total distance \(= 5.75\) units
+- Assuming time taken is approximately 5.75 units (vertical component negligible)
+
+Therefore, the average speed for Evelyn would be:
+\[ \text{Average Speed}_{Evelyn} = \frac{5.75}{5.75} = 1 \text{ unit per unit time} \]
+
+**Briana:**
+- Average Speed = \(\frac{\text{Total Distance}}{\text{Total Time}}\)
+- Total distance \(= 3.1\) units
+- Assuming time taken is approximately 2.8 units (vertical component negligible",False,False,False,,
+test/algebra/1837.json,0,5,"To solve this problem, we need to find the value of \( x \) such that the ratio of Denali's pay to Nate's pay remains the same under different conditions.
+
+Let's denote:
+- Denali's total dogs: 16
+- Nate's total dogs: 12
+
+### Step 1: Calculate the initial pay ratio
+The initial pay ratio is given by:
+\[
+\frac{\text{Denali's Pay}}{\text{Nate's Pay}} = \frac{16}{12} = \frac{4}{3}
+\]
+
+### Step 2: Analyze the first condition
+In this case, Denali starts walking \(4x\) more dogs and Nate stays at 12 dogs:
+- New number of dogs for Denali: \(16 + 4x\)
+- Number of dogs remaining for Nate: 12
+
+The new pay ratio is:
+\[
+\frac{\text{Denali's Pay}}{\text{Nate's Pay}} = \frac{(16 + 4x) / (16)}{12 / (16 - x)}
+\]
+
+Simplify the equation:
+\[
+\frac{16}{12} \cdot \frac{x}{x} = \frac{4}{3} \cdot \frac{x}{x}
+\]
+This simplifies to:
+\[
+\frac{4}{3} = \frac{4}{3}
+\]
+
+The ratio is the same, so this condition is satisfied.
+
+### Step 3: Analyze the second condition
+In this case, \( x \) of Nate's dogs are reassigned to Denali:
+- New number of dogs for Denali: \(16 + x\)
+- Number of dogs remaining for Nate: \(12 - x\)
+
+The new pay ratio is:
+\[
+\frac{\text{Denali's Pay}}{\text{Nate's Pay}} = \frac{(16 + x) / 16}{(12 - x) / (12)}
+\]
+
+Simplify the equation:
+\[
+\frac{16 + x}{16} \cdot \frac{12}{12 - x}
+\]
+This simplifies to:
+\[
+\frac{48(x)}{16(12 - x)} = \frac{48x}{192 - 16x}
+\]
+
+We need this ratio to be the same as before, which is \( \frac{4}{3} \):
+\[
+\frac{x}{x-16} = \frac{4}{3}
+\]
+
+### Step 4: Solve for \( x \)
+Cross-multiplying gives:
+\[
+3x = 4(x - 16)
+\]
+Expanding and simplifying:
+\[
+3x = 4x - 64
+\]
+\[
+0 = x - 64
+\]
+\[
+x = 64
+\]
+
+Thus, the value of \( x \) that satisfies both conditions is:
+\[
+\boxed{8}
+\]",False,False,False,,
+test/algebra/1837.json,1,5,"Let's denote:
+- \( D \) as the number of dogs Denali walks,
+- \( N \) as the number of dogs Nate walks.
+
+Given:
+\[ D = 16, \]
+\[ N = 12. \]
+
+Under the company’s new policy, they will be assigned or unassigned new groups of \( x \) dogs.
+
+### Step 1: Calculate Denali's and Nate's pay initially
+- Initially, Denali walks 16 dogs.
+- Initially, Nate walks 12 dogs.
+
+Let's calculate their initial earnings:
+\[ D = 16, \]
+\[ N = 12. \]
+
+### Step 2: Evaluate the conditions given in the problem
+
+#### Condition 1: If Denali starts walking \(4x\) more dogs and Nate stays at 12 dogs.
+- New number of dogs Denali walks:
+\[ D_{\text{new}} = 16 + 4x. \]
+- Number of dogs Nate walks remains unchanged:
+\[ N_{\text{new}} = 12. \]
+
+The new pay ratio should be the same as initially:
+\[ \frac{\text{Denali's initial pay}}{\text{Nate's initial pay}} = \frac{\text{New Denali's pay}}{\text{Nate's new pay}}. \]
+This gives us:
+\[ \frac{16}{12} = \frac{16 + 4x}{12}. \]
+
+Simplify the equation:
+\[ \frac{16}{12} = 1, \]
+\[ 16 + 4x = 12. \]
+
+### Step 3: Solve for \( x \)
+Subtract 16 from both sides of the equation:
+\[ 4x = -4. \]
+
+Divide by 4 to find \( x \):
+\[ x = -1. \]
+
+Since \( x \) cannot be negative, this condition does not provide a valid solution.
+
+#### Condition 2: If \( x \) of Nate’s dogs were reassigned to Denali.
+- New number of dogs Denali walks:
+\[ D_{\text{new}} = 16 + x. \]
+- Number of dogs Nate walks remains unchanged:
+\[ N_{\text{new}} = 12. \]
+
+The new pay ratio should be the same as initially:
+\[ \frac{\text{Denali's initial pay}}{\text{Nate's initial pay}} = \frac{\text{New Denali's pay}}{\text{Nate's new pay}}. \]
+This gives us:
+\[ \frac{16}{12} = \frac{16 + x}{12}. \]
+
+Simplify the equation:
+\[ \frac{16}{12} = 1, \]
+\[ 16 + x = 12. \]
+
+### Step 4: Solve for \( x \)
+Subtract 16 from both sides of the equation:
+\[ x = -4. \]
+
+Again, since \( x \) cannot be negative, this condition does not provide a valid solution.
+
+#### Condition 3: If Denali starts walking fewer dogs.
+- New number of dogs Denali walks:
+\[ D_{\text{new}} = 16 - 4x. \]
+- Number",False,False,False,,
+test/algebra/2036.json,0,3\sqrt{13},"To find the distance between two points \((x_1, y_1)\) and \((x_2, y_2)\) in a coordinate plane, we use the distance formula:
+
+\[
+d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}
+\]
+
+Given points are \((2, -6)\) and \((-4, 3)\). Let's identify the coordinates:
+- \(x_1 = 2\), \(y_1 = -6\)
+- \(x_2 = -4\), \(y_2 = 3\)
+
+Now we substitute these values into the distance formula:
+
+\[
+d = \sqrt{((-4) - 2)^2 + (3 - (-6))^2}
+\]
+
+First, calculate the differences:
+\[
+(-4) - 2 = -6
+\]
+\[
+3 - (-6) = 3 + 6 = 9
+\]
+
+Next, square these results:
+\[
+(-6)^2 = 36
+\]
+\[
+9^2 = 81
+\]
+
+Now add the squared differences:
+\[
+36 + 81 = 117
+\]
+
+Finally, take the square root of the sum to find the distance:
+\[
+d = \sqrt{117}
+\]
+
+To simplify \(\sqrt{117}\), we look for perfect squares that multiply to \(117\):
+- \(9\) is a perfect square (\(3^2 = 9\))
+- We can factor out \(9\):
+\[
+117 = 9 \times 13
+\]
+
+Thus:
+\[
+d = \sqrt{9 \times 13} = \sqrt{9} \times \sqrt{13} = 3\sqrt{13}
+\]
+
+Therefore, the distance between the points is:
+
+\[
+\boxed{3\sqrt{13}}
+\]",True,True,False,,
+test/algebra/2193.json,1,x=5,"### Step-by-step Solution:
+
+1. **Start with the given equation**: 
+   \[
+   x = \sqrt{11 - 2x} + 4
+   \]
+
+2. **Isolate the square root term**:
+   \[
+   x - 4 = \sqrt{11 - 2x}
+   \]
+
+3. **Square both sides to eliminate the square root**:
+   \[
+   (x - 4)^2 = (\sqrt{11 - 2x})^2
+   \]
+   Simplifying this gives us:
+   \[
+   x^2 - 8x + 16 = 11 - 2x
+   \]
+
+4. **Move all terms to one side**:
+   \[
+   x^2 - 8x + 16 - 11 + 2x = 0
+   \]
+   Simplifying further:
+   \[
+   x^2 - 6x + 5 = 0
+   \]
+
+5. **Factor the quadratic equation**:
+   \[
+   (x - 5)(x - 1) = 0
+   \]
+
+6. **Solve for \(x\)**:
+   \[
+   x - 5 = 0 \quad \text{or} \quad x - 1 = 0
+   \]
+   Therefore, the solutions are:
+   \[
+   x = 5 \quad \text{and} \quad x = 1
+   \]
+
+7. **Check for extraneous solutions by substituting back into the original equation**:
+
+   - For \(x = 5\):
+     \[
+     5 = \sqrt{11 - 2(5)} + 4
+     \]
+     Simplifying inside the square root:
+     \[
+     5 = \sqrt{11 - 10} + 4
+     \]
+     This simplifies to:
+     \[
+     5 = \sqrt{1} + 4
+     \]
+     Since \( \sqrt{1} = 1 \), we have:
+     \[
+     5 = 1 + 4
+     \]
+     This is true, so \(x = 5\) is a valid solution.
+
+   - For \(x = 1\):
+     \[
+     1 = \sqrt{11 - 2(1)} + 4
+     \]
+     Simplifying inside the square root:
+     \[
+     1 = \sqrt{11 - 2} + 4
+     \]
+     This simplifies to:
+     \[
+     1 = \sqrt{9} + 4
+     \]
+     Since \( \sqrt{9} = 3 \), we have:
+     \[
+     1 = 3 + 4
+     \]
+     This is not true, so \(x = 1\) is not a valid solution.
+
+### Conclusion:
+
+The only value of \(x\) that satisfies the equation is:
+
+\[
+\boxed{5}
+\]",True,True,False,,
+test/algebra/2427.json,0,10,"To determine the minimal compound interest rate required for the worker to have at least \$66,200 in his savings account by the end of the third year, we need to calculate the future value of his annual deposits and then find the interest rate that will grow this amount to \$66,200.
+
+Let's denote the annual deposit as \( P = 20{,}000 \) and the interest rate as \( r \). The future value (FV) of an annuity where money is deposited at the end of each year can be calculated using the formula for the future value of an ordinary annuity:
+
+\[ FV = P \left( \frac{(1 + r)^n - 1}{r} \right) \]
+
+where:
+- \( P \) is the annual deposit,
+- \( r \) is the annual interest rate (as a decimal),
+- \( n \) is the number of years.
+
+For our scenario, \( P = 20{,}000 \), \( n = 3 \), and we want to find \( r \) such that:
+
+\[ FV = 66{,}200 \]
+
+Substituting into the formula gives us:
+
+\[ 66{,}200 = 20{,}000 \left( \frac{(1 + r)^3 - 1}{r} \right) \]
+
+We need to solve this equation for \( r \). Let's simplify it step-by-step.
+
+First, divide both sides by 20{,}000:
+
+\[ 3.31 = \frac{(1 + r)^3 - 1}{r} \]
+
+Multiply both sides by \( r \):
+
+\[ 3.31r = (1 + r)^3 - 1 \]
+
+Expand the right-hand side:
+
+\[ 3.31r = 1 + 3r + 3r^2 + r^3 - 1 \]
+\[ 3.31r = r^3 + 3r^2 + 3r \]
+
+Rearrange to set it to zero:
+
+\[ r^3 + 3r^2 + (3.31 - 3)r = 0 \]
+\[ r^3 + 3r^2 + 0.31r = 0 \]
+
+Factor out \( r \):
+
+\[ r(r^2 + 3r + 0.31) = 0 \]
+
+This gives us one solution:
+
+\[ r = 0 \] (which is not relevant for a positive interest rate)
+
+The quadratic equation can be solved using the quadratic formula, but it results in complex roots that are practically irrelevant here. Instead, we recognize this as a cubic equation which generally requires numerical methods or iterative techniques to solve.
+
+However, by trial and error with reasonable precision, one finds:
+
+\[ r \approx 0.0269375 \]
+
+Thus, the interest rate is approximately:
+
+\[ r = 2.69\% \]
+
+Hence, the minimal compound interest rate that the savings account must provide to reach at least \$66,200 by the end of three years is:
+
+\[
+\boxed{2.69}
+\]",False,False,False,,
+test/algebra/2584.json,0,\frac{14}{3},"To solve for \( f(-2) + f(-1) + f(0) \), we first need to determine the values of \( f(x) \) at each given point.
+
+Given the function:
+\[ f(x) = \frac{3x-2}{x-2} \]
+
+### Step 1: Evaluate \( f(-2) \)
+Substitute \( x = -2 \) into the function:
+\[ f(-2) = \frac{3(-2) - 2}{-2 - 2} \]
+Simplify the numerator and the denominator:
+\[ f(-2) = \frac{-6 - 2}{-4} \]
+\[ f(-2) = \frac{-8}{-4} \]
+\[ f(-2) = 2 \]
+
+### Step 2: Evaluate \( f(-1) \)
+Substitute \( x = -1 \) into the function:
+\[ f(-1) = \frac{3(-1) - 2}{-1 - 2} \]
+Simplify the numerator and the denominator:
+\[ f(-1) = \frac{-3 - 2}{-3} \]
+\[ f(-1) = \frac{-5}{-3} \]
+\[ f(-1) = \frac{5}{3} \]
+
+### Step 3: Evaluate \( f(0) \)
+Substitute \( x = 0 \) into the function:
+\[ f(0) = \frac{3(0) - 2}{0 - 2} \]
+Simplify the numerator and the denominator:
+\[ f(0) = \frac{-2}{-2} \]
+\[ f(0) = 1 \]
+
+### Step 4: Sum the values
+Now, add \( f(-2) \), \( f(-1) \), and \( f(0) \):
+\[ f(-2) + f(-1) + f(0) = 2 + \frac{5}{3} + 1 \]
+
+To combine these terms, we need a common denominator. The common denominator for 2 and 1 is 3:
+\[ 2 = \frac{6}{3} \]
+So the expression becomes:
+\[ \frac{6}{3} + \frac{5}{3} + 1 \]
+
+Convert 1 to a fraction with the same denominator:
+\[ 1 = \frac{3}{3} \]
+
+Add the fractions and add the whole number:
+\[ \frac{6}{3} + \frac{5}{3} + \frac{3}{3} = \frac{6+5+3}{3} = \frac{14}{3} \]
+
+Thus, the value of \( f(-2) + f(-1) + f(0) \) is:
+\[ \boxed{\frac{14}{3}} \]",True,True,False,,
+test/counting_and_probability/525.json,0,144,"To solve this problem, we will first calculate the total number of ways to arrange 7 people around a round table without any restrictions. Then, we will subtract the number of arrangements where at least two specific people sit next to each other (Pierre, Rosa, and Thomas).
+
+1. **Calculate the total number of unrestricted arrangements:**
+   - For \( n \) objects arranged in a circle, the total number of distinct arrangements is \((n-1)!\). Here, \( n = 7 \).
+   \[
+   (7-1)! = 6! = 720
+   \]
+
+2. **Calculate the number of restricted arrangements:**
+   - First, let's consider the unrestricted arrangement as a linear one first.
+   - We then ""unroll"" this into a circle where we can rotate positions freely but still have to adjust for rotations.
+
+3. **Identify overlapping constraints (Pierre, Rosa, and Thomas together):**
+   - If Pierre, Rosa, and Thomas are treated as single unit \( PRT \), treat them collectively.
+   - This means when arranging 7 people around a table, we can initially place this ""block"" of three people along with the other four individuals: 
+     \[
+     (P_1)(R_1)(T_1)(P_2)(R_2)(T_2)...
+     \]
+   - The positions of these 7 units around a circular table can be arranged in:
+     \[
+     (6)!
+     \]
+   - Therefore, the total number of restricted arrangements is \( (P_1)(R_1)(T_1)(P_2)(R_2)(T_2) = 3! \times 4 \times 6! \).
+
+4. **Subtract the restricted from the unrestricted:**
+   \[
+   \text{Total unrestricted} - \text{Restricted} = 720 - (3!) \times 4 \times 6!
+   \]
+   Simplify \( 3! = 6 \):
+   \[
+   720 - 6 \times 4 \times 720
+   \]
+
+5. **Calculate the final value:**
+   \[
+   720 - (6 \times 4) \times 720 = 720 - 960 = -240
+   \]
+   
+   Since this results in a negative number, it indicates an overcounting and requires correction.
+   Correct calculation:
+   \[
+   720 - 3! \times 4 \times 6!
+   \]
+
+After correcting for the mistake in counting, we conclude that:
+
+The final answer is: 
+\boxed{180}",False,False,False,,
+test/counting_and_probability/525.json,1,144,"### Step 1: Initial Setup
+We have \(7\) people sitting around a round table. We need to find the number of ways to arrange them such that no two of three specific individuals, Pierre, Rosa, and Thomas, sit next to each other.
+
+### Step 2: Calculate Total Arrangements Without Restrictions
+First, we calculate the total number of arrangements without any restrictions. This is given by:
+\[
+7! = 5040
+\]
+
+### Step 3: Calculate Restricted Arrangements (When Any Two of Pierre, Rosa, and Thomas Are Next to Each Other)
+Next, we determine how many ways \(2\) of the three specific individuals can be seated next to each other. We treat each pair as a single ""block.""
+
+- There are \(\binom{3}{2}\) ways to choose which two people will sit together.
+- The number of arrangements within these pairs is \(2!\).
+
+Thus, the total number of arrangements where any two of Pierre, Rosa, and Thomas are next to each other is:
+\[
+\binom{3}{2} \times 2! = 3 \times 2 = 6
+\]
+
+### Step 4: Calculate Restricted Arrangements (When All Three Are Next to Each Other)
+Similarly, we calculate the number of ways all three individuals can sit next to each other. There are \(1\) way to choose which group is next to each other:
+\[
+3! = 6
+\]
+
+### Step 5: Subtract Non-Valid Arrangements from Total Arrangements
+To get the total valid arrangements, we subtract the number of restricted cases (where any two or all three sit next to each other) from the total possible arrangements:
+\[
+7! - \text{(number of unrestricted + restrictions)} = 5040 - (6 + 6) = 5040 - 12 = 5028
+\]
+
+### Step 6: Conclusion
+The number of ways to arrange \(7\) people around a round table such that no two Pierre, Rosa, and Thomas sit next to each other is:
+\[
+\boxed{5028}
+\]",False,False,False,,
+test/counting_and_probability/666.json,0,225,"To solve this problem, we need to determine how many different combinations of upper class and lower class soldiers can be selected for the battalion required at Thermopylae. 
+
+Firstly, let's denote:
+- The number of upper class soldiers as \( U \)
+- The number of lower class soldiers as \( L \)
+
+From the problem statement, we know:
+1. There are 5 upper class soldiers (\( U = 5 \))
+2. There are 10 lower class soldiers (\( L = 10 \))
+
+Next, we need to find out how many different battalions can be formed with exactly 4 upper class and 8 lower class soldiers.
+
+This is a combination problem where the order of selection does not matter. We will use the binomial coefficient formula \( C(n, k) \), which represents the number of ways to choose \( k \) items from \( n \) items without repetition:
+
+\[ C(U + L, k) = \frac{(U + L)!}{k! \times (U + L - k)!} \]
+
+Here:
+- The total number of soldiers is \( U + L = 5 + 10 = 15 \)
+- We need to choose 4 upper class soldiers (\( k = 4 \))
+
+So the formula for our specific problem becomes:
+
+\[ C(15, 4) = \frac{15!}{4!(15 - 4)!} \]
+
+Now calculate \( 15! \), \( 4! \), and then simplify the expression:
+
+\[ 15! = 15 \times 14 \times 13 \times 12 \times 11 \times 10 \times 9 \times 8 \times 7 \times 6 \times 5 \times 4 \times 3 \times 2 \times 1 \]
+\[ 4! = 4 \times 3 \times 2 \times 1 = 24 \]
+
+And the denominator:
+
+\[ (U + L)! - k! = 15! - 4! \]
+
+Now substitute and simplify:
+
+\[ C(15, 4) = \frac{15!}{4!(15-4)!} = \frac{15!}{24 \times 11!} \]
+
+We can cancel out the \( 11! \) in the numerator with a part of the denominator:
+
+\[ C(15, 4) = \frac{15 \times 14 \times 13 \times 12 \times 10!}{24 \times 10!} \]
+\[ C(15, 4) = \frac{15 \times 14 \times 13 \times 12}{24} \]
+
+Now simplify the fractions step by step:
+
+\[ 15 \div 3 = 5 \]
+\[ 14 \div 7 = 2 \]
+\[ 12 \div 6 = 2 \]
+
+So:
+
+\[ C(15, 4) = 5 \times 2 \times 2 \times 10 = 5 \times 4 \times 2 \times 10 = 10 \times 2 \times",False,False,False,,
+test/counting_and_probability/666.json,1,225,"The number of upper class soldiers that could have been selected for the battalion is as follows: $2 + 3 = 5$;  
+The number of lower class soldiers that could have been selected for the battalion is as follows: $4 + 4 = 8$.  
+Therefore, there are a total of $\boxed{5}$ different battalions.",False,False,False,,
+test/geometry/248.json,0,5,"To determine the height of the cylinder given its volume and radius, we start by using the formula for the volume of a cylinder:
+
+\[
+V = \pi r^2 h
+\]
+
+Given:
+- Volume \( V = 45\pi \) cubic cm
+- Radius \( r = 3 \) cm
+
+First, substitute the known values into the volume formula:
+
+\[
+45\pi = \pi (3)^2 h
+\]
+
+Simplify the equation:
+
+\[
+45\pi = \pi \cdot 9h
+\]
+
+Divide both sides by \( \pi \):
+
+\[
+45 = 9h
+\]
+
+Now, solve for \( h \) by dividing both sides by 9:
+
+\[
+h = \frac{45}{9}
+\]
+
+Simplify the fraction:
+
+\[
+h = 5
+\]
+
+Thus, the height of the cylinder is:
+
+\[
+\boxed{5} \text{ cm}
+\]",True,True,False,,
+test/geometry/248.json,1,5,"The volume of a cylinder is given by the formula: \[ V = \pi r^2 h \]
+
+In this problem, we are given that the height \( h = 2.2 \) cm and the radius \( r = 3 \) cm.
+
+Plugging in these values into the volume formula gives us:
+
+\[ V = \pi (3)^2 (2.2) \]
+\[ V = \pi (9)(2.2) \]
+
+We know that the volume is \( 45\pi \) cubic centimeters, so we can equate this to our derived equation:
+
+\[ 45\pi = \pi (9)(2.2) \]
+
+Divide both sides by \( \pi \):
+
+\[ 45 = 18.9 \times h \]
+
+Solve for \( h \):
+
+\[ h = \frac{45}{18.9} \]
+
+Now, we can simplify this fraction:
+
+\[ h = 2.4 \]
+
+So the height of the cylinder is:
+
+\[
+\boxed{2.4}
+\]",False,False,False,,
+test/geometry/434.json,0,28,"To solve the problem, we need to use the properties of parallel lines and angles formed by them.
+
+Given:
+- \( \overline{BC} \) is parallel to the segment through \( A \).
+- \( AB = BC \).
+
+We are looking for the number of degrees represented by \( x \).
+
+Step 1: Identify the angle relationships.
+Since \( \overline{AB} = \overline{BC} \), triangle \( ABC \) is an isosceles triangle with \( \angle BAC = 124^\circ \). 
+
+In a triangle, the sum of the angles is always \( 180^\circ \).
+
+Step 2: Calculate angle \( \angle ACB \).
+The angles in triangle \( ABC \) are:
+\[ \angle BAC + \angle ABC + \angle BCA = 180^\circ. \]
+
+Substitute \( \angle BAC = 124^\circ \):
+\[ 124^\circ + x + y = 180^\circ, \]
+where \( y = \angle BCA \).
+
+Step 3: Use the parallel lines property.
+Since \( \overline{BC} \) is parallel to the segment through \( A \), corresponding angles are equal. This means:
+\[ \angle ABC = \angle ACB = x. \]
+
+Thus, we can rewrite the equation as:
+\[ 124^\circ + x + x = 180^\circ. \]
+\[ 124^\circ + 2x = 180^\circ. \]
+
+Step 4: Solve for \( x \).
+\[ 2x = 180^\circ - 124^\circ, \]
+\[ 2x = 56^\circ, \]
+\[ x = 28^\circ. \]
+
+Therefore, the number of degrees represented by \( x \) is:
+\[
+\boxed{28}
+\]",True,True,False,,
+test/geometry/434.json,1,28,"Given the problem of finding \( x \) in degrees:
+
+1. **Identify Parallel Lines and Transversal:**
+   - Since \(\overline{BC}\) is parallel to the segment through point \( A \), we have two parallel lines.
+   - The line containing \( AB \) and \( BC \) acts as a transversal.
+
+2. **Angle Relationships:**
+   - We need to find the relationship between angle \( x \) and other given angles in the diagram.
+   
+3. **Given Angles:**
+   - Angle \( \angle BAC = 124^\circ \).
+   - Let's denote:
+     - \( \angle ABC = y \),
+     - \( \angle ACB = z \).
+
+4. **Properties of Parallel Lines and Transversal:**
+   - In a transversal cutting two parallel lines, corresponding angles are equal.
+   - Therefore, angle \( x \) corresponds to the given \( 124^\circ \) angle.
+
+5. **Finding Angle Relationships:**
+   - Since \( AB = BC \), triangle \( ABC \) is isosceles with base angles equal:
+     \[
+     z = y
+     \]
+
+6. **Sum of Angles in Triangle:**
+   - The sum of the angles in any triangle is \( 180^\circ \):
+     \[
+     x + y + z = 180^\circ
+     \]
+
+7. **Substitute Known Values:**
+   - Since \( z = y \) and we know one angle:
+     \[
+     x + y + y = 180^\circ
+     \]
+     Simplifying,
+     \[
+     x + 2y = 180^\circ
+     \]
+
+8. **Angle Relationships in Isosceles Triangle:**
+   - The base angles of the isosceles triangle \( ABC \) are equal:
+     \[
+     z = y
+     \]
+   - Therefore,
+     \[
+     x + 2y = 180^\circ
+     \]
+
+9. **Solve for \( y \):**
+   - We need to find the value of \( y \):
+     \[
+     x + 2(124) = 180
+     \]
+     Simplifying,
+     \[
+     x + 248 = 180
+     \]
+
+10. **Solve for \( x \):**
+    - Subtracting from both sides to isolate \( x \):
+      \[
+      x = 180^\circ - 248^\circ
+      \]
+      \[
+      x = -68^\circ
+      \]
+
+### Conclusion:
+Thus, the number of degrees represented by \( x \) is:
+
+\[\boxed{-68^\circ}\]",False,False,False,,
+test/intermediate_algebra/1000.json,0,3,"To solve for \(a\) in the equation \(x^3 + ax^2 + ax + 1 = 0\) where all roots are real, we start by considering a potential root using the Rational Root Theorem. We test the possible rational roots, which are \(\pm 1\).
+
+First, let's check if \(x = -1\) is a root:
+\[
+(-1)^3 + a(-1)^2 + a(-1) + 1 = -1 + a - a + 1 = 0
+\]
+This simplifies to:
+\[
+0 = 0
+\]
+So, \(-1\) is indeed a root. Therefore, we can factor \(x + 1\) out of the polynomial:
+\[
+x^3 + ax^2 + ax + 1 = (x + 1)(x^2 + bx + c)
+\]
+We need to determine the quadratic polynomial \(x^2 + bx + c\). Since \(-1\) is a root, we can substitute it back into the equation:
+\[
+-1^3 + a(-1)^2 + a(-1) + 1 = -a + a + 1 = 0
+\]
+This simplifies to:
+\[
+0 = 0
+\]
+We need to find \(b\) and \(c\) such that the product of the factors is zero. Let's expand \((x + 1)(x^2 + bx + c)\):
+\[
+(x + 1)(x^2 + bx + c) = x^3 + bx^2 + cx + x^2 + bx + c = x^3 + (b+1)x^2 + (c+b)x + c
+\]
+By comparing coefficients with \(x^3 + ax^2 + ax + 1\), we get:
+\[
+a = b + 1 \quad \text{and} \quad c = 1
+\]
+We already know that \(c = 1\). Now, substitute \(b = a - 1\) into the equation for \(a\):
+\[
+a = (a-1) + 1
+\]
+This simplifies to:
+\[
+a = a
+\]
+To find the smallest possible value of \(a\), we need to ensure that all roots are real. Since \(-1\) is one root, and the polynomial must have three real roots, the remaining two roots must be such that their product with -1 results in 1. This means the other roots must satisfy:
+\[
+r_1 = r_2 = -1
+\]
+The third root \(r_3\) can be found by considering the symmetry and properties of the polynomial. If we assume the polynomial has a root at \(-1\) and another pair of equal real roots, then the remaining root is also \(-1\) to satisfy the polynomial condition. This implies that the polynomial can be factored as:
+\[
+(x + 1)^3 = x^3 + 3x^2 + 3x + 1
+\]
+Comparing coefficients with \(x^3 + ax^2 + ax + 1 = (x+1)(x^2 + bx + c)\), we get:
+\[
+a = b + 1 \quad \text{and} \quad c =",False,False,False,,
+test/intermediate_algebra/1000.json,1,3,"Given the polynomial \( P(x) = x^3 + ax^2 + ax + 1 \), we need to find the values of \( a \) such that all roots are real.
+
+### Step 1: Consider the Polynomial Properties
+
+The polynomial is:
+\[ P(x) = (x - r_1)(x - r_2)(x - r_3) \]
+where \( r_1, r_2, \) and \( r_3 \) are the roots of the polynomial.
+
+### Step 2: Use Vieta's Formulas
+
+Vieta’s formulas relate the coefficients of a polynomial to sums and products of its roots. For our polynomial:
+- The sum of the roots is given by the negative coefficient of \( x^2 \):
+  \[ r_1 + r_2 + r_3 = -a \]
+- The sum of the product of the roots taken two at a time is given by the coefficient of \( x \):
+  \[ r_1r_2 + r_2r_3 + r_3r_1 = a \]
+- The product of the roots is given by the constant term with the opposite sign:
+  \[ r_1r_2r_3 = -1 \]
+
+### Step 3: Analyze Possible Values for \( a \)
+
+Since all roots are real, we consider specific values of \( a \) and check if they satisfy these conditions.
+
+#### Case Analysis
+
+Let's test some values of \( a \):
+
+**Case 1: \( a = 0 \)**
+
+\[ P(x) = x^3 + 1 \]
+The roots are:
+\[ r_1, r_2, r_3 \]
+where:
+\[ r_1 + r_2 + r_3 = 0 \]
+\[ r_1r_2 + r_2r_3 + r_3r_1 = 0 \]
+\[ r_1r_2r_3 = -1 \]
+
+These roots are complex, confirming they do not satisfy the real root condition.
+
+**Case 2: \( a = 1 \)**
+
+\[ P(x) = x^3 + x^2 + x + 1 \]
+
+The roots of this polynomial can be found by trying possible rational roots:
+- Testing \( x = -1 \):
+  \[ (-1)^3 + (-1)^2 + (-1) + 1 = -1 + 1 - 1 + 1 = 0 \]
+So, \( x = -1 \) is a root.
+
+Using polynomial division or synthetic division:
+\[ P(x) = (x + 1)(x^2 + x + 1) \]
+
+The quadratic \( x^2 + x + 1 \) has no real roots because its discriminant is negative:
+\[ \Delta = 1 - 4 \cdot 1 \cdot 1 = 1 - 4 = -3 < 0 \]
+
+Thus, the polynomial does not have any real roots.
+
+**Case 3: \( a = 2 \)**
+
+We test for possible rational roots using synthetic division or by trying small values:
+- Testing \( x = -1 \):
+\[ (-1)^3 + 2(-1)^2 + 2(-1) + 1 = -1 + 2 - 2 +",False,False,False,,
+test/intermediate_algebra/1197.json,0,\frac{3}{56},"To solve the problem, we start by considering the polynomial \( p(x) \) of degree 5 that satisfies the condition \( p(n) = \frac{n}{n^2 - 1} \) for \( n = 2, 3, 4, 5, 6, 7 \). This means that \( p(n) \) can be expressed as a polynomial in terms of these specific values.
+
+First, let's rewrite the given condition:
+\[ p(2) = \frac{2}{2^2 - 1} = \frac{2}{3}, \]
+\[ p(3) = \frac{3}{3^2 - 1} = \frac{3}{8}, \]
+\[ p(4) = \frac{4}{4^2 - 1} = \frac{4}{15}, \]
+\[ p(5) = \frac{5}{5^2 - 1} = \frac{5}{24}, \]
+\[ p(6) = \frac{6}{6^2 - 1} = \frac{6}{35}, \]
+\[ p(7) = \frac{7}{7^2 - 1} = \frac{7}{48}. \]
+
+We are asked to find \( p(8) \). To do this, we will use the fact that \( p(x) \) can be expressed as:
+\[ p(x) = \sum_{k=2}^{7} a_k (x-2)(x-3)\cdots(x-k+1), \]
+where the coefficients \( a_2, a_3, \ldots, a_7 \) are determined by the values of \( p(k) \).
+
+Since we have 5 linear factors for each polynomial term from degree 5 down to degree 0 (i.e., constant terms), and only one value at each step is provided, it indicates that the coefficients \( a_k \) will be determined uniquely up to a constant multiple. However, without loss of generality, let's assume we can find these coefficients such that they fit all given values.
+
+The polynomial \( p(x) \) evaluated at 8 should then be:
+\[ p(8) = a_2 (8-2)(8-3)\cdots(8-1) + a_3 (8-2)(8-3)\cdots(8-4) + \cdots + a_7 (8-2)(8-3)\cdots(8-7). \]
+Since we know the values of \( p(n) \) for 2 through 7, we can substitute these values back into our polynomial form. The key is to recognize that the terms involving higher powers of factors cancel out in a specific way due to symmetry and properties of polynomials.
+
+After simplifying, it turns out:
+\[ p(8) = 1. \]
+
+Thus, the final answer is:
+\[
+\boxed{1}
+\]",False,False,False,,
+test/intermediate_algebra/1197.json,1,\frac{3}{56},"Given the polynomial \( p(x) \) of degree 5 and the values \( p(n) = \frac{n}{n^2 - 1} \) for \( n = 2, 3, 4, 5, 6, 7 \), we aim to find \( p(8) \).
+
+First, observe that \( n^2 - 1 = (n-1)(n+1) \). This suggests a relationship with the tangent line at infinity of a certain conic section. The function \( f(x) = \frac{x}{x^2 - 1} \) can be decomposed using partial fractions:
+\[
+f(x) = \frac{x}{(x-1)(x+1)}.
+\]
+We express it as the sum of two simpler fractions:
+\[
+\frac{x}{(x-1)(x+1)} = \frac{A}{x-1} + \frac{B}{x+1}.
+\]
+Multiplying through by \( (x-1)(x+1) \), we get
+\[
+x = A(x+1) + B(x-1).
+\]
+By equating the coefficients, we have:
+\[
+A + B = 1,
+\]
+\[
+A - B = 0.
+\]
+Solving these equations, we find \( A = B = \frac{1}{2} \). Thus, we can write:
+\[
+f(x) = \frac{1/2}{x-1} + \frac{1/2}{x+1}.
+\]
+This decomposition allows us to express \( p(n) \) as a polynomial of degree 5. The function \( f(x) \) has vertical asymptotes at \( x = 1 \) and \( x = -1 \), indicating that the polynomial \( p(x) \) will have singularities at these points.
+
+To find \( p(8) \), we need to consider the behavior of the original function as \( n \) approaches infinity. The limit of \( f(n) \) as \( n \to \infty \) is:
+\[
+\lim_{n \to \infty} \frac{n}{n^2 - 1} = 0.
+\]
+This suggests that for large \( x \), \( p(x) \) will approach the value of the function at infinity, which is 0. Therefore, we can infer:
+\[
+p(8) = f(8).
+\]
+
+Next, we compute \( f(8) \):
+\[
+f(8) = \frac{1/2}{8-1} + \frac{1/2}{8+1} = \frac{1/2}{7} + \frac{1/2}{9}.
+\]
+Simplifying each term:
+\[
+\frac{1/2}{7} = \frac{1}{14},
+\]
+\[
+\frac{1/2}{9} = \frac{1}{18}.
+\]
+Adding these fractions:
+\[
+f(8) = \frac{1}{14} + \frac{1}{18}.
+\]
+
+To add these fractions, we find a common denominator. The least common multiple of 14 and 18 is 126.
+\[
+\frac{",False,False,False,,
+test/intermediate_algebra/134.json,0,-50,"To solve the given problem, we start by examining the pattern of the sequence \( 1 - 2 + 3 - 4 + 5 - \dots + 99 - 100 \).
+
+Let's break down the series step-by-step:
+
+\[
+S = 1 - 2 + 3 - 4 + 5 - \dots + 99 - 100
+\]
+
+We can group the terms in pairs to simplify our calculation. Each pair consists of a positive term followed by a negative term.
+
+First, let's consider \( S \):
+
+\[
+S = (1 - 2) + (3 - 4) + (5 - 6) + \dots + (99 - 100)
+\]
+
+Each pair simplifies to:
+
+\[
+(1 - 2) = -1
+\]
+\[
+(3 - 4) = -1
+\]
+\[
+(5 - 6) = -1
+\]
+\[
+\vdots
+\]
+\[
+(99 - 100) = -1
+\]
+
+So, we can write the series as:
+
+\[
+S = (-1 + -1 + \dots + -1)
+\]
+
+There are 50 terms in these pairs (from \(2\) to \(100\)), and each pair sums to \(-1\). Therefore, there are 50 such pairs.
+
+Thus, the sum of all pairs is:
+
+\[
+S = 50 \times (-1) = -50
+\]
+
+Finally, we have our final answer:
+
+\[
+\boxed{-50}
+\]",True,True,False,,
+test/intermediate_algebra/134.json,1,-50,"**Analysis of Problem**: This is a sequential alternating addition and subtraction sequence calculation problem. Since there are an even number of terms, we can separate them into two groups to calculate.
+
+**Step-by-step Solution**:
+
+Firstly, let's group the numbers in pairs:  
+$(1-2) + (3-4) + ... + (97-98)$
+
+Each pair subtracts one from the next. Therefore, every subtraction cancels out half of its immediate neighbors' value. So, we have:  
+$= -1 + (-1) + ... + (-1)$ (there are 50 pairs)
+
+Secondly, calculate the sum of all these $-1$s:
+
+The total number of terms is 100, which means there are 50 such groups.
+
+Therefore, the final answer is $\boxed{-50}$.",,True,False,,
+test/intermediate_algebra/1388.json,0,"1,-2","To solve the functional equation \( f(x) + f(y) = f(x + y) - xy - 1 \), we start by examining specific values of \( x \) and \( y \).
+
+First, let's set \( x = 0 \) and \( y = 0 \):
+\[ f(0) + f(0) = f(0 + 0) - 0 \cdot 0 - 1 \]
+This simplifies to:
+\[ 2f(0) = f(0) - 1 \]
+Rearranging terms gives:
+\[ 2f(0) - f(0) = -1 \]
+\[ f(0) = -1 \]
+
+Next, let's set \( y = 1 \):
+\[ f(x) + f(1) = f(x + 1) - x \]
+Since we know \( f(1) = 1 \), this becomes:
+\[ f(x) + 1 = f(x + 1) - x \]
+Rearranging terms gives:
+\[ f(x + 1) = f(x) + 1 - x \]
+
+Now, let's consider the general form of \( f(n) \). We already know that \( f(0) = -1 \), and we need to find a pattern for other values. Let's set \( y = n \):
+\[ f(x) + f(n) = f(x + n) - xn - 1 \]
+Since \( f(n) = f(n - 0) + 1 - (0) \), this can be rewritten as:
+\[ f(n) + f(x) = f(x + n) - x(n - 0) - 1 \]
+\[ f(n) + f(x) = f(x + n) - xn - 1 \]
+
+By comparing the two equations, we see that \( f(n) = n + 1 \). To verify, substitute \( f(x) = x + 1 \) into the original equation:
+\[ (x + 1) + (y + 1) = (x + y + 1) - xy - 1 \]
+Simplifying both sides, we get:
+\[ x + 1 + y + 1 = x + y + 1 - xy - 1 \]
+\[ x + y + 2 = x + y + 1 - xy - 1 \]
+Both sides are equal, confirming that \( f(x) = x + 1 \).
+
+Finally, we need to find all integers \( n \) such that \( f(n) = n \):
+\[ n + 1 = n \]
+Solving for \( n \), we get:
+\[ 1 = 0 \]
+This is not possible. Therefore, there are no integer solutions to the equation \( f(n) = n \).
+
+The final answer is:
+\boxed{None}",False,False,False,,
+test/intermediate_algebra/607.json,0,13535,"To find the greatest integer less than \((\sqrt{7} + \sqrt{5})^6\), we will proceed step by step.
+
+First, let's denote \( x = \sqrt{7} + \sqrt{5} \). We need to express \( (\sqrt{7} + \sqrt{5})^6 \) in a form that might be easier to work with. Let's consider the conjugate of \( x \), which is \( y = \sqrt{7} - \sqrt{5} \).
+
+Notice that:
+\[ (x + y)^2 = (\sqrt{7} + \sqrt{5})^2 + 2\sqrt{7}\sqrt{5} = (\sqrt{7} + \sqrt{5})(\sqrt{7} + \sqrt{5}) = 14. \]
+Thus, \( x + y = \sqrt{14} \).
+
+Since \( x + y = \sqrt{14} \) and \( x - y = \sqrt{14} \), we have:
+\[ (x + y)^3 = (\sqrt{7} + \sqrt{5})^3 = 2\sqrt{14} \cdot \sqrt{14} = 28. \]
+Similarly, we can find \( (x - y)^3 = 28 \).
+
+Now, let's consider the binomial expansion of \( x^6 \) and \( y^6 \):
+\[ x^6 = (\sqrt{7} + \sqrt{5})^6 \quad \text{and} \quad y^6 = (\sqrt{7} - \sqrt{5})^6. \]
+
+We will use the fact that:
+\[ (x + y)^3 = 28 \implies x^3 + y^3 = 28, \]
+\[ (x - y)^3 = 28 \implies x^3 - y^3 = 28. \]
+
+Thus, we have:
+\[ 2(x^3 + y^3) = 56 \implies x^3 + y^3 = 28. \]
+So,
+\[ (x + y)^3 + (x - y)^3 = 56 \implies 28 + 28 = 56, \]
+which is true.
+
+Next, we need to find \( (\sqrt{7} + \sqrt{5})^6 \). We will use the fact that:
+\[ x^4 = (x^2)^2 = (7 + 10\sqrt{35} + 5) = 12 + 10\sqrt{35}, \]
+and
+\[ y^4 = (\sqrt{7} - \sqrt{5})^4 = 12. \]
+
+We can find \( x^6 \) and \( y^6 \):
+\[ x^6 = (x^2)^3 = (12 + 10\sqrt{35})^3, \]
+and
+\[ y^6 = (\sqrt{7} - \sqrt{5})^6. \]
+
+To find the greatest integer less than \( x^6 \), we need to approximate \( x^6 \). Notice that:
+\[ (x + y)^2",,False,False,,
+test/intermediate_algebra/607.json,1,13535,"To solve the problem of finding the greatest integer less than \( (\sqrt{7} + \sqrt{5})^6 \), we will follow these steps:
+
+1. **Simplify the Expression Inside the Parentheses:**
+   We start by letting \( x = \sqrt{7} + \sqrt{5} \). We need to find a simpler form of this expression.
+
+2. **Square Both Sides:**
+   First, square both sides of the equation:
+   \[
+   (\sqrt{7} + \sqrt{5})^2 = 12
+   \]
+   This is because:
+   \[
+   (\sqrt{7} + \sqrt{5})^2 = (\sqrt{7})^2 + 2\sqrt{7}\sqrt{5} + (\sqrt{5})^2 = 7 + 2\sqrt{35} + 5
+   \]
+   Simplifying the right-hand side:
+   \[
+   7 + 5 + 2\sqrt{35} = 12 + 2\sqrt{35}
+   \]
+
+3. **Simplify Further:**
+   Next, we need to find \( x^6 \). We know:
+   \[
+   (\sqrt{7} + \sqrt{5})^2 = 12
+   \]
+   So, squaring again gives:
+   \[
+   (12)^3 = 12^2 \cdot 12 = 4896
+   \]
+
+4. **Determine the Greatest Integer Less Than \( x^6 \):**
+   Now we need to find the greatest integer less than \( x^6 \). We have:
+   \[
+   (\sqrt{7} + \sqrt{5})^6 = (12)^3 = 12^2 \cdot 12
+   \]
+   Calculate \( 12^2 \):
+   \[
+   12^2 = 144
+   \]
+   Therefore:
+   \[
+   (\sqrt{7} + \sqrt{5})^6 = 144 \times 12
+   \]
+
+5. **Perform the Multiplication:**
+   Calculate \( 144 \times 12 \):
+   \[
+   144 \times 12 = 144 \times (10 + 2) = 1440 + 288 = 1728
+   \]
+
+6. **Find the Greatest Integer Less Than \( x^6 \):**
+   Finally, we need to find the greatest integer less than 1728:
+   \[
+   1728 < 1730
+   \]
+   Therefore, the greatest integer less than 1728 is 1727.
+
+### Conclusion:
+\[
+\boxed{1727}
+\]",False,False,False,,
+test/number_theory/1032.json,1,2220,"To determine the least positive integer multiple of 30 that consists only of the digits 0 and 2, we need to consider the divisibility rules for both 2 and 5. A number is divisible by 2 if its last digit must be even (i.e., it can be 0 or 2). Since we are limited to using only the digits 0 and 2, the last digit of our number must be 0.
+
+Next, a number is divisible by 5 if its last digit must be either 0 or 5. Again, since we cannot use the digit 5, the last digit must also be 0.
+
+Since both conditions (being even and ending in 0) are already satisfied by using only the digits 0 and 2, any number formed solely from these digits will be divisible by 10. Since our number is a multiple of 30, it must also be a multiple of 10 because \(30 = 5 \times 6\) and 10 is already satisfied.
+
+The smallest positive integer that can be written using only the digits 0 and 2 is 2. Therefore, the least positive integer multiple of 30 that consists only of the digits 0 and 2 is:
+
+\[
+\boxed{2}
+\]",False,False,False,,
+test/number_theory/515.json,0,27,"To find the smallest positive perfect cube that can be written as the sum of three consecutive integers, let's start by expressing the sum of three consecutive integers algebraically. Let the three consecutive integers be \(n-1\), \(n\), and \(n+1\). The sum of these integers is:
+
+\[
+(n-1) + n + (n+1) = 3n
+\]
+
+We are looking for a perfect cube that can be expressed as \(3n\) where \(n\) is an integer. Let's denote this perfect cube by \(k^3\), so we have:
+
+\[
+3n = k^3 \implies n = \frac{k^3}{3}
+\]
+
+For \(n\) to be an integer, \(k^3\) must be divisible by 3. The smallest positive integer value for \(k\) that makes \(k^3\) divisible by 3 is 3 itself (since \(1^3 = 1\) and \(2^3 = 8\), but \(3^3 = 27\) and so on). Let's check if \(n = \frac{3^3}{3} = 9\) works:
+
+\[
+k = 3, \quad n = \frac{3^3}{3} = 9
+\]
+
+Since \(n = 9\) is an integer, we substitute back to find the perfect cube:
+
+\[
+3n = 3 \times 9 = 27
+\]
+
+So, the smallest positive perfect cube that can be written as the sum of three consecutive integers is:
+
+\boxed{27}",True,True,False,,
+test/number_theory/515.json,1,27,"To solve the problem, we first need to express a number as the sum of three consecutive integers and determine if it can be a perfect cube. Let's denote the three consecutive integers by \(n-1\), \(n\), and \(n+1\). The sum of these integers is:
+\[
+(n-1) + n + (n+1) = 3n.
+\]
+We need to find the smallest positive integer \(k\) such that \(3n = k^3\) for some integer \(n\). This means we need to solve for \(n\) in terms of \(k\):
+\[
+n = \frac{k^3}{3}.
+\]
+For \(n\) to be an integer, \(k^3\) must be divisible by 3. Since 3 is a prime number, \(k\) itself must be at least 3 (because if \(k < 3\), \(k^3\) would not be divisible by 3). Let's start with the smallest possible value for \(k\):
+
+1. If \(k = 3\):
+   \[
+   n = \frac{3^3}{3} = \frac{27}{3} = 9.
+   \]
+   The sum of the three consecutive integers is:
+   \[
+   8 + 9 + 10 = 27,
+   \]
+   and \(27\) is a perfect cube because \(27 = 3^3\).
+
+Since we are asked for the smallest positive perfect cube, and 27 is indeed the smallest such number that can be expressed as the sum of three consecutive integers, the answer is:
+\[
+\boxed{27}
+\]",True,True,False,,
+test/number_theory/572.json,0,9,"To determine how many positive whole-number divisors the number \(196\) has, we first need to find its prime factorization. 
+
+Starting with the smallest prime numbers:
+
+- Divide by \(2\):
+\[ 196 \div 2 = 98 \]
+
+- Next, divide \(98\) by \(2\):
+\[ 98 \div 2 = 49 \]
+
+Now we have:
+\[ 196 = 2^2 \times 49 \]
+
+Next, factorize \(49\). Since \(49\) is not divisible by \(2\) or \(3\), it must be a prime number. Therefore:
+\[ 49 = 7^2 \]
+
+Thus, the complete prime factorization of \(196\) is:
+\[ 196 = 2^2 \times 7^2 \]
+
+To find the total number of positive divisors, we use the formula for finding the number of factors given a prime factorization. If we have a number with the form \(a^x \times b^y \times c^z\), where \(a, b,\) and \(c\) are different prime numbers, then the total number of divisors is calculated by adding 1 to each exponent in the prime factorization and multiplying these results together:
+\[ (x + 1)(y + 1)(z + 1) \]
+
+For our factorization \(2^2 \times 7^2\):
+- The exponent for \(2\) is \(2\), so \(2 + 1 = 3\).
+- The exponent for \(7\) is \(2\), so \(2 + 1 = 3\).
+
+Thus, the total number of divisors is:
+\[ (2 + 1)(2 + 1) = 3 \times 3 = 9 \]
+
+Therefore, the number of positive whole-number divisors that \(196\) has is \(\boxed{9}\).",True,True,False,,
+test/number_theory/572.json,1,9,"To find the number of positive whole-number divisors that 196 has, we first need to determine its prime factorization. Let's break it down step by step:
+
+1. **Prime Factorization**:
+   - Start by dividing 196 by the smallest prime number, which is 2.
+     \[
+     196 \div 2 = 98
+     \]
+     So, \(196 = 2 \times 98\).
+   
+2. **Continue Dividing**:
+   - Next, divide 98 by 2 again (since it is still even).
+     \[
+     98 \div 2 = 49
+     \]
+     So, \(196 = 2^2 \times 49\).
+
+3. **Check for Further Divisibility**:
+   - Now, check if 49 can be divided by a smaller prime number.
+     \[
+     49 \div 7 = 7
+     \]
+     Since 49 is divisible by 7, we have \(196 = 2^2 \times 7^2\).
+
+   - Verify further:
+     \[
+     7 \div 7 = 1
+     \]
+     Thus, 7 can be written as a power of 7: 
+     \[
+     49 = 7^2.
+     \]
+
+    Therefore, the prime factorization of 196 is \(196 = 2^2 \times 7^2\).
+
+4. **Counting Divisors**:
+   - To find the total number of divisors, use the formula for finding the power of each prime in a number's factorization.
+     If a number has a prime factorization as \(p_1^{e_1} \times p_2^{e_2} \times \ldots \times p_n^{e_n}\), then the total number of divisors is given by:
+       \[
+       (e_1 + 1) \times (e_2 + 1) \times \ldots \times (e_n + 1).
+       \]
+     For \(196 = 2^2 \times 7^2\), we have:
+         - The exponent of 2 is 2.
+           So, the number of divisors involving 2 is \(2 + 1 = 3\).
+         - The exponent of 7 is 2. 
+           So, the number of divisors involving 7 is \(2 + 1 = 3\).
+
+5. **Total Divisors**:
+   - Multiply these counts together to get the total number of divisors.
+     \[
+     (2+1) \times (2+1) = 3 \times 3 = 9
+     \]
+
+### Conclusion:
+
+Therefore, the positive whole-number divisor count for \(196\) is \(\boxed{9}\).",True,True,False,,
+test/number_theory/737.json,0,284,"To solve the problem, we need to follow these steps:
+
+1. Identify the proper divisors of 284.
+2. Calculate the sum of these proper divisors.
+3. Find the proper divisors of this sum.
+4. Calculate the sum of these divisors.
+
+Let's start with step 1: Identifying the proper divisors of 284.
+
+First, we find all divisors of 284 by checking which numbers divide 284 without leaving a remainder:
+\[ 284 \div 2 = 142 \]
+\[ 284 \div 3 = 94.67 (not an integer) \]
+\[ 284 \div 4 = 71 \]
+So, the divisors of 284 are: \(1, 2, 4, 71, 142\). The proper divisors, which are less than 284, are: \(1, 2, 4, 71, 142\).
+
+Next, we calculate the sum of these proper divisors:
+\[ 1 + 2 + 4 + 71 + 142 = 220 \]
+
+Now, let's move to step 3: Finding the proper divisors of the sum of the proper divisors of 284. Since we have already determined that the sum is 220, we now find the proper divisors of 220:
+\[ 220 = 1 \times 220 \]
+\[ 220 \div 2 = 110 \]
+\[ 220 \div 4 = 55 \]
+So, the divisors of 220 are: \(1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220\). The proper divisors, which are less than 220, are: \(1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, 220\).
+
+Finally, we calculate the sum of these divisors:
+\[ 1 + 2 + 4 + 5 + 10 + 11 + 20 + 22 + 44 + 55 + 110 + 220 = 476 \]
+
+So, the sum of the proper divisors of the sum of the proper divisors of 284 is:
+\[
+\boxed{476}
+\]",False,False,False,,
+test/number_theory/737.json,1,284,"Let's start by finding the sum of the proper divisors of 284. The proper divisors are all positive divisors except for 284 itself.
+
+1. **Find Proper Divisors:**
+   - We need to find numbers less than 284 that divide evenly into 284.
+   
+2. **Divisibility Check:**
+   - Divide 284 by each integer from 1 up to 283:
+     \[
+     \begin{aligned}
+     284 ÷ 1 &= 284 \\
+     284 ÷ 2 &= 142 \\
+     284 ÷ 3 &= \text{not an integer} \\
+     &\vdots
+     \end{aligned}
+     \]
+   - Continue this process for each number from 1 to 283.
+
+3. **List Proper Divisors:**
+   - After checking, the proper divisors of 284 are:
+     \[
+     1, 2, 4, 71, 142
+     \]
+
+4. **Calculate Sum:**
+   - Add these numbers together to find the sum of the proper divisors.
+   \[
+   1 + 2 + 4 + 71 + 142 = 220
+   \]
+
+5. **Find Proper Divisors of This Sum (220):**
+   - The proper divisors of 220 are all positive divisors less than 220.
+   
+6. **Divisibility Check Again:**
+   - Divide 220 by each integer from 1 up to 219:
+     \[
+     \begin{aligned}
+     220 ÷ 1 &= 220 \\
+     220 ÷ 2 &= 110 \\
+     220 ÷ 4 &= 55 \\
+     &\vdots
+     \end{aligned}
+     \]
+   - Continue this process for each number from 1 to 219.
+
+7. **List Proper Divisors of 220:**
+   - After checking, the proper divisors of 220 are:
+     \[
+     1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110
+     \]
+
+8. **Calculate Sum:**
+   - Add these numbers together to find the sum of the proper divisors.
+   \[
+   1 + 2 + 4 + 5 + 10 + 11 + 20 + 22 + 44 + 55 + 110 = 286
+   \]
+
+9. **Final Answer:**
+   - Therefore, the sum of the proper divisors of the sum of the proper divisors of 284 is:
+     \[
+     \boxed{286}
+     \]",False,False,False,,
+test/prealgebra/1139.json,0,4,"To solve the problem of finding all possible values we can obtain from the expression \(2 \cdot 3 \cdot 4 \cdot 5 + 1\) by inserting parentheses, let's break it down step by step.
+
+Firstly, evaluate the original expression without any parentheses:
+\[
+2 \cdot 3 \cdot 4 \cdot 5 + 1
+\]
+
+Calculate each multiplication step-by-step:
+
+\[
+2 \cdot 3 = 6
+\]
+\[
+6 \cdot 4 = 24
+\]
+\[
+24 \cdot 5 = 120
+\]
+
+So, the original expression simplifies to:
+\[
+120 + 1 = 121
+\]
+
+Next, we need to consider how inserting parentheses can change this result. Parentheses allow us to choose different ways of grouping the terms within \(3 \cdot 4\) and \(5 + 1\).
+
+#### Case 1: Grouping \(3 \cdot 4\) before adding 1
+
+In this case, insert a set of parentheses around \(3 \cdot 4\):
+\[
+(2 \cdot (3 \cdot 4)) + 1
+\]
+
+Calculate the expression inside the first set of parentheses:
+\[
+3 \cdot 4 = 12
+\]
+Then:
+\[
+2 \cdot 12 = 24
+\]
+
+Adding one more step to account for the original value plus 1, we get:
+\[
+24 + 1 = 25
+\]
+
+#### Case 2: Grouping \(3 \cdot 4\) after adding 1
+
+In this case, insert a set of parentheses around \(5 + 1\):
+\[
+(2 \cdot (3 \cdot 4)) + 1
+\]
+
+Calculate the expression inside the first set of parentheses:
+\[
+3 \cdot 4 = 12
+\]
+Then:
+\[
+2 \cdot 12 = 24
+\]
+
+Adding one more step to account for the original value plus 1, we get:
+\[
+24 + 1 = 25
+\]
+
+#### Case 3: Grouping both \(3 \cdot 4\) and \(5 + 1\) together
+
+In this case, insert parentheses around the entire expression:
+\[
+(2 \cdot (3 \cdot 4)) + (5 + 1)
+\]
+
+Calculate each part separately:
+\[
+3 \cdot 4 = 12
+\]
+Then:
+\[
+2 \cdot 12 = 24
+\]
+
+Adding one more step to account for the original value plus 1, we get:
+\[
+24 + 6 = 30
+\]
+
+#### Case 4: Grouping both \(3 \cdot 4\) and \(5 + 1\) in a different way
+
+In this case, insert parentheses around one part differently but keep everything else the same:
+\[
+(2 \cdot (3 \cdot 4)) + 1
+\]
+
+This has been already calculated as 25.
+
+#### Case 5: Grouping both \(3 \cdot 4\) and \(5 + 1\) in a completely different way
+
+In this case, insert parentheses around the entire expression differently:
+\[
+(2 \cdot (3 \cdot 4))",False,False,False,,
+test/prealgebra/1139.json,1,4,"To determine how many distinct values can be obtained from the expression \(2 \cdot 3 \cdot 4 \cdot 5 + 1\) by inserting parentheses, we need to evaluate all possible ways of grouping the multiplication and addition.
+
+The original expression is:
+\[2 \cdot 3 \cdot 4 \cdot 5 + 1\]
+
+First, let's consider the possibility of using parentheses around the entire expression except for the last term (which is a constant). This means we can write:
+\[(2 \cdot 3) \cdot (4 \cdot 5) + 1\]
+
+Calculating inside the parentheses first, we get:
+\[6 \cdot 20 = 120\]
+Adding 1 gives:
+\[120 + 1 = 121\]
+
+Next, let's consider using parentheses around each multiplication except for one of them. This means we can write:
+\[(2 \cdot (3 \cdot 4)) \cdot (5 + 1)\] or
+\[(2 \cdot (4 \cdot 5)) \cdot (3 + 1)\]
+
+Calculating inside the first set of parentheses, we get:
+\[6 \cdot 9 = 54\]
+Adding 1 gives:
+\[54 + 1 = 55\]
+
+Calculating inside the second set of parentheses, we get:
+\[8 \cdot 4 = 32\]
+Adding 1 gives:
+\[32 + 1 = 33\]
+
+Finally, let's consider using parentheses around each multiplication except for one of them. This means we can write:
+\[(2 \cdot (3 \cdot (4 \cdot 5))) + 1\] or
+\[(2 \cdot ((3 \cdot 4) \cdot 5)) + 1\]
+
+Calculating inside the first set of parentheses, we get:
+\[6 \cdot 20 = 120\]
+Adding 1 gives:
+\[120 + 1 = 121\]
+
+Calculating inside the second set of parentheses, we get:
+\[8 \cdot 5 = 40\]
+Adding 1 gives:
+\[40 + 1 = 41\]
+
+In summary, the distinct values we can obtain are 121, 55, 33, and 41. Therefore, there are 4 distinct values that can be obtained from the expression \(2 \cdot 3 \cdot 4 \cdot 5 + 1\) by inserting parentheses.
+
+The final answer is:
+\[
+\boxed{4}
+\]",True,True,False,,
+test/prealgebra/1622.json,0,42,"To solve this problem, let's first understand how a regular hexagon can be divided into smaller shapes and then calculate its perimeter.
+
+A regular hexagon has six equal sides. If we divide it into six equilateral triangles (each triangle being an equilateral triangle), each side of the hexagon would be equivalent to one side of one of these equilateral triangles.
+
+Given that the perimeter of one of these equilateral triangles is 21 inches, we can conclude:
+
+- Each side of the hexagon is equal to one side of one of these equilateral triangles.
+- Since it's an equilateral triangle, all three sides are equal and each side measures 21 inches.
+
+The perimeter \(P\) of a regular hexagon with side length \(s\) is given by:
+\[ P = 6 \times s \]
+
+Here, the side length \(s\) is 21 inches. Therefore:
+
+- The perimeter of one equilateral triangle (each part) is 21 inches.
+- Since there are six parts that make up a hexagon, the total perimeter of the hexagon would be:
+\[ P_{\text{hexagon}} = 6 \times 21 = 126 \]
+
+So, the perimeter of the regular hexagon is \(126\) inches. The final answer is:
+
+\[
+\boxed{126}
+\]",False,False,False,,
+test/prealgebra/1622.json,1,42,"To find the perimeter of the regular hexagon given that it is composed of six equilateral triangles and each side of these triangles has a length of \(\frac{21}{6} = 3.5\) inches (since the perimeter of one triangle is 21 inches), we proceed as follows:
+
+1. **Identify the number of sides in the hexagon:**
+   A regular hexagon has six equal sides.
+
+2. **Determine the side length of each equilateral triangle:**
+   Each side of an equilateral triangle measures \(3.5\) inches.
+
+3. **Calculate the perimeter of the hexagon:**
+   Since a hexagon consists of six such triangles, and each side is \(3.5\) inches:
+   \[
+   \text{Perimeter of the hexagon} = 6 \times \text{side length}
+   \]
+   Substituting the given side length:
+   \[
+   \text{Perimeter of the hexagon} = 6 \times 3.5
+   \]
+
+4. **Perform the multiplication:**
+   \[
+   6 \times 3.5 = 21
+   \]
+
+Thus, the perimeter of the regular hexagon is:
+\[
+\boxed{21}
+\]",False,False,False,,
+test/prealgebra/1840.json,0,78,"To find out the profit of the math club from selling cookies, cupcakes, and brownies, we need to calculate the total revenue generated by each type of baked item and then subtract the total cost of baking.
+
+### Step 1: Calculate Revenue
+
+#### Cookies:
+- The price is $54$ cookies for $\$1$. This means for every dollar they earn, they sell $54$ cookies.
+  
+Since they can't sell a fraction of a cookie in this context (it's stated as ""3 for \$1""), we'll assume each cookie sold individually and use the given number of $54$ to find out how much money was made from selling all the cookies.
+
+- If they sell $54$ cookies, they make:
+\[ 54 \text{ cookies} \times \$0.9876 = \$53.12\]
+
+#### Cupcakes:
+- Each cupcake costs $\$2$, and they sold $20$ of them.
+  
+So the revenue from cupcakes is:
+\[ 20 \text{ cupcakes} \times \$2 = \$40 \]
+
+#### Brownies:
+- Each brownie costs $\$1$, and they sold $35$ of them.
+
+Thus, the revenue from brownies is:
+\[ 35 \text{ brownies} \times \$1 = \$35 \]
+
+### Step 2: Calculate Total Revenue
+
+Total revenue is the sum of all individual revenues:
+\[
+\$53.12 + \$40 + \$35
+\]
+Adding these amounts together, we get:
+
+\[
+\$53.12 + \$40 + \$35 = \$128.12
+\]
+
+### Step 3: Calculate Profit
+
+Now, subtract the cost of baking the items from the total revenue to find the profit:
+\[
+Total \text{ Revenue} - Cost \text{ to Bake}
+\]
+Substituting the values:
+
+\[
+\$128.12 - \$15 = \$113.12
+\]
+
+### Final Answer
+
+Therefore, their profit is \(\boxed{113.12}\).",False,False,False,,
+test/prealgebra/1840.json,1,78,"Let's solve this step by step:
+
+### Step 1: Calculate Total Revenue from Cookies
+
+- The math club sells cookies for $54$ in total.
+- They sell three cookies for each pack at a price of $\$1$ per pack.
+
+#### Calculating the number of packs:
+\[
+\text{Number of packs} = \frac{\text{Total number of cookies}}{\text{Cookies per pack}} = \frac{54}{3} = 18
+\]
+
+#### Calculating Total Revenue from Cookies:
+\[
+\text{Revenue from cookies} = (\text{Price per pack}) \times (\text{Number of packs}) = \$1 \times 18 = \$18
+\]
+
+### Step 2: Calculate Total Revenue from Cupcakes
+
+- The math club sells $20$ cupcakes at a price of $\$2$ each.
+
+#### Calculating the total revenue from cupcakes:
+\[
+\text{Revenue from cupcakes} = (\text{Price per cupcake}) \times (\text{Number of cupcakes}) = \$2 \times 20 = \$40
+\]
+
+### Step 3: Calculate Total Revenue from Brownies
+
+- The math club sells $35$ brownies at a price of $\$1$ each.
+
+#### Calculating the total revenue from brownies:
+\[
+\text{Revenue from brownies} = (\text{Price per brownie}) \times (\text{Number of brownies}) = \$1 \times 35 = \$35
+\]
+
+### Step 4: Calculate Total Revenue
+
+- Adding up all the revenues:
+
+\[
+\text{Total revenue} = \text{Revenue from cookies} + \text{Revenue from cupcakes} + \text{Revenue from brownies}
+\]
+\[
+= \$18 + \$40 + \$35
+\]
+
+### Step 5: Calculate Profit
+
+- The math club spent $\$15$ to bake these items.
+- To find the profit, subtract the cost of baking from the total revenue.
+
+#### Calculating the profit:
+\[
+\text{Profit} = \text{Total Revenue} - (\text{Cost to bake}) = \$18 + \$40 + \$35 - \$15
+\]
+\[
+= \$93 - \$15
+\]
+\[
+= \$78
+\]
+
+### Final Answer:
+The math club's profit is \(\boxed{\$78}\).",True,True,False,,
+test/precalculus/1199.json,0,\pi,"To determine the smallest possible value of \( c \) in the equation \( y = a \sin(bx + c) + d \), we need to analyze the given graph and identify key features such as amplitude, period, phase shift, and vertical shift.
+
+1. **Amplitude (\( a \))**:
+   The maximum value on the graph is 3 and the minimum value is -1. Therefore, the amplitude \( a \) can be calculated as:
+   \[
+   a = \frac{\text{Maximum} - \text{Minimum}}{2} = \frac{3 - (-1)}{2} = 2
+   \]
+
+2. **Period (\( b \))**:
+   The period of the sine function is related to \( b \) by the formula:
+   \[
+   \text{Period} = \frac{2\pi}{b}
+   \]
+   From the graph, observe that one full cycle of the sine wave spans from \( -3\pi \) to \( 3\pi \):
+   \[
+   \text{Period} = 3\pi
+   \]
+
+   Solving for \( b \):
+   \[
+   \frac{2\pi}{b} = 3\pi \implies b = \frac{2\pi}{3\pi} = \frac{2}{3}
+   \]
+
+3. **Phase Shift (\( c \))**:
+   To find the phase shift \( c \), we need to identify a point on the graph and compare it with the sine function's standard form.
+   
+   Let's consider the vertical shift \( d \) (which is 1 from the given problem). The phase shift can be found by setting up an equation where:
+   \[
+   y = 2\sin\left(\frac{2}{3}x + c\right) + 1
+   \]
+   
+   We need to find a point that matches the graph's behavior. For instance, at \( x = -\frac{\pi}{2} \):
+   \[
+   y = 2\sin\left(\frac{2}{3}\left(-\frac{\pi}{2}\right) + c\right) + 1
+   \]
+   Simplifying:
+   \[
+   y = 2\sin\left(-\frac{\pi}{3} + c\right) + 1
+   \]
+
+4. **Determine \( c \)**:
+   On the graph, observe that at \( x = -\frac{\pi}{2} \), the value of \( y \) is 3 (maximum). Therefore:
+   \[
+   3 = 2\sin\left(-\frac{\pi}{3} + c\right) + 1
+   \]
+
+   Solving for \( \sin\left(-\frac{\pi}{3} + c\right) \):
+   \[
+   2 = \sin\left(-\frac{\pi}{3} + c\right)
+   \]
+   
+   The sine function reaches its maximum value of 1 at:
+   \[
+   -\frac{\pi}{3} + c = 0
+   \]
+
+   Solving for \( c \):
+   \[
+   c = \frac{\pi}{3}
+   \]
+
+Conclusion:",False,False,False,,
+test/precalculus/1199.json,1,\pi,"To find the smallest possible value of \(c\) in the equation \(y = a \sin(bx + c) + d\), we need to analyze the graph provided and understand how it relates to the general form of the sine function.
+
+1. **Identify Key Points on the Graph:**
+   The graph shows points where \(y = 2\) (since the maximum value is 3, so the amplitude \(a = 2\)). These points are \((0, 2)\), \(\left(-\frac{\pi}{6}, 2\right)\), and \(\left(\frac{5\pi}{6}, 2\right)\). This indicates that the graph of \(y = a \sin(bx + c) + d\) is shifted vertically by 1 (the vertical shift \(d = 1\)) and has an amplitude of 2.
+
+2. **Determine the Period:**
+   The period of the sine function is given by \(\frac{2\pi}{b}\). From the graph, we can see that one complete cycle occurs from \(-\frac{\pi}{6}\) to \(\frac{5\pi}{6}\), which spans \(1\) (the horizontal shift or phase shift \(c = -\frac{\pi}{6} + \frac{5\pi}{6} = \frac{2\pi}{3}\)).
+
+3. **Identify the Phase Shift:**
+   The graph shows that it is shifted to the right by \(\frac{2\pi}{3}\). This means \(c = -\frac{\pi}{6} + 1\) (since the phase shift is the horizontal distance from the origin, and we need to adjust it accordingly).
+
+4. **Determine the Smallest Possible Value of \(c\):**
+   The smallest possible value of \(c\) would be when the graph starts at its minimum point directly after the vertical shift but before the first peak. This occurs when the phase shift is \(\frac{\pi}{2}\) to align with a sine wave starting from zero and reaching the maximum at 1 unit above the x-axis. Therefore, we need to find \(c\) such that it aligns with this condition.
+
+The smallest possible value of \(c\) in the given problem is:
+
+\[
+\boxed{0}
+\]",False,False,False,,
+test/precalculus/1303.json,0,\sqrt{51},"To solve for the length of \(DE\) in the given diagram, we start by analyzing the right triangle formed by points \(D\), \(E\), and \(F\).
+
+Given:
+- \(\sin D = 0.7\)
+- The side opposite angle \(D\) (which is \(DE\)) is 7 units.
+
+We know that in a right triangle, the sine of an angle is defined as the ratio of the length of the opposite side to the hypotenuse. Let's denote:
+- \(\angle D = \theta\)
+- Hypotenuse \(DF = x\)
+
+From the definition of sine:
+\[
+\sin D = \frac{\text{opposite}}{\text{hypotenuse}} = \frac{DE}{DF} = 0.7
+\]
+
+Given that \(DE = 7\) and substituting into the equation, we have:
+\[
+0.7 = \frac{7}{x}
+\]
+
+Solving for \(x\):
+\[
+x = \frac{7}{0.7} = 10
+\]
+
+Therefore, the length of \(DF\) is 10 units.
+
+Now, using the Pythagorean theorem to find \(DE\), we have:
+\[
+DF^2 = DE^2 + EF^2
+\]
+\[
+10^2 = 7^2 + EF^2
+\]
+\[
+100 = 49 + EF^2
+\]
+
+Solving for \(EF\):
+\[
+EF^2 = 100 - 49 = 51
+\]
+\[
+EF = \sqrt{51}
+\]
+
+Since we are given that \(E\) is on the vertical line parallel to \(DF\), and considering the angle \(D\) in a right triangle, the length of \(DE\) (which is the same as \(EF\)) can be directly taken from the Pythagorean theorem's result.
+
+Thus, the final answer for the length of \(DE\) is:
+\[
+\boxed{\sqrt{51}}
+\]",True,True,False,,
+test/precalculus/779.json,0,-2 + 7i,"To solve the problem of rotating a complex number \(7 + 2i\) by \(90^\circ\) counterclockwise around the origin, we can use the geometric properties of rotation in the complex plane. A \(90^\circ\) rotation counterclockwise corresponds to multiplying the complex number by \(i\).
+
+Let's break it down step by step:
+
+1. **Identify the given complex number and its transformation:**
+   The original complex number is \(7 + 2i\).
+   
+2. **Understand the rotation property:**
+   A \(90^\circ\) counterclockwise rotation of a complex number \(z = x + yi\) around the origin can be achieved by multiplying it by \(i\). Therefore, we need to calculate:
+   \[
+   (7 + 2i) \cdot i
+   \]
+
+3. **Perform the multiplication:**
+   To multiply these two complex numbers, use the distributive property:
+   \[
+   (7 + 2i) \cdot i = 7i + 2i^2
+   \]
+   Recall that \(i\) is the imaginary unit with the property \(i^2 = -1\):
+   \[
+   2i^2 = 2(-1) = -2
+   \]
+
+4. **Combine the terms:**
+   Now, add and subtract accordingly:
+   \[
+   7i + (-2) = -2 + 7i
+   \]
+
+5. **Write the final result:**
+   The resulting complex number after a \(90^\circ\) counterclockwise rotation is:
+   \[
+   -2 + 7i
+   \]
+
+Thus, the answer is:
+
+\[
+\boxed{-2 + 7i}
+\]",True,True,False,,
+test/precalculus/779.json,1,-2 + 7i,"### Step-by-Step Solution
+
+1. **Identify the given point and its transformation**:
+   - The starting point is \( z = 7 + 2i \).
+   - We need to apply a \(90^\circ\) counterclockwise rotation around the origin.
+
+2. **Understand the effect of a \(90^\circ\) counterclockwise rotation**:
+   - A \(90^\circ\) counterclockwise rotation in the complex plane transforms a point \((x, y)\) to \((-y, x)\).
+   - For a complex number \(z = a + bi\), this rotation maps it to \(-b + ai\).
+
+3. **Apply the rotation to the given complex number**:
+   - Here, \(a = 7\) and \(b = 2\).
+   - The new coordinates are obtained by swapping the roles of \(x\) and \(y\) (which in this case is simply negating the imaginary part and keeping the real part unchanged).
+
+4. **Perform the transformation**:
+   \[
+   z' = -b + ai
+   \]
+   Substituting \(a = 7\) and \(b = 2\):
+   \[
+   z' = -2 + 7i
+   \]
+
+5. **Conclusion**:
+   The resulting complex number after a \(90^\circ\) counterclockwise rotation around the origin is \(-2 + 7i\).
+
+### Final Answer
+
+\[
+\boxed{-2 + 7i}
+\]",True,True,False,,
+test/precalculus/807.json,0,"\left( 3, \frac{\pi}{2} \right)","To convert the rectangular coordinates $(x, y) = (0, 3)$ to polar coordinates $(r, \theta)$, we use the following formulas:
+- The radial distance $r$ is given by $r = \sqrt{x^2 + y^2}$. Since $x=0$, this simplifies to $r = |y| = 3$.
+- The angle $\theta$ can be found using the arctangent function, but it must be adjusted based on quadrant. For $(0, 3)$, we're looking at a vertical line along the y-axis, so in the first quadrant where $x=0$, all points have an angle of $\frac{\pi}{2}$. Thus, $\theta = \arctan\left(\frac{y}{x}\right) = \arctan(3/0) = \frac{\pi}{2}$.
+
+So the polar coordinates are $(r, \theta) = (3, \frac{\pi}{2})$.
+
+Therefore, the answer is $\boxed{(3, \frac{\pi}{2})}$.",True,True,False,,
+test/precalculus/807.json,1,"\left( 3, \frac{\pi}{2} \right)","To convert from Cartesian (rectangular) to polar coordinates, we use the formulas:
+
+\[ r = \sqrt{x^2 + y^2} \]
+\[ \theta = \tan^{-1}\left(\frac{y}{x}\right) \]
+
+Given that $(0, 3)$ in rectangular coordinates:
+- $x = 0$
+- $y = 3$
+
+### Step-by-step solution:
+
+#### Calculate \( r \):
+
+\[ r = \sqrt{x^2 + y^2} \]
+Substitute the given values for \( x \) and \( y \):
+\[ r = \sqrt{0^2 + 3^2} \]
+\[ r = \sqrt{9} \]
+\[ r = 3 \]
+
+#### Calculate \( \theta \):
+
+\[ \theta = \tan^{-1}\left(\frac{y}{x}\right) \]
+Substitute the given values for \( x \) and \( y \):
+\[ \theta = \tan^{-1}\left(\frac{3}{0}\right) \]
+Since \( x = 0 \), the point lies on the positive \( y \)-axis, so:
+\[ \theta = \frac{\pi}{2} \]
+
+#### Final answer:
+
+Thus, the polar coordinates of the point $(0, 3)$ are:
+\[
+(r, \theta) = (3, \frac{\pi}{2})
+\]",True,True,False,,
+test/precalculus/927.json,0,90^\circ,"To solve for the angle between two lines given by their equations \(2x = 3y = -z\) and \(6x = -y = -4z\), we first need to express each equation as parametric form or a symmetric form of vector equations.
+
+1. **Equation 1: \(2x = 3y = -z\)**
+
+   Let's set:
+   \[
+   2x = 3y = z
+   \]
+
+   From this, we can write the following relationships for the coordinates:
+
+   Setting \(2x = y\) and \(2x + 3y = z\) yields a symmetric form of vector equations. Solving these will help us understand how to represent these lines.
+
+2. **Equation 2: \(6x = -y = -4z\)**
+
+   Similarly, set:
+   \[
+   6x = y = -4z
+   \]
+
+   From this, we can write the following relationships for coordinates:
+
+   Set \(6x + y = z\) yields a symmetric form of vector equations. Solving these will help us understand how to represent these lines.
+
+Now, let's convert each equation into parametric form and find their direction vectors:
+   
+- For Equation 1: 
+   \[
+   x = t,
+   \]
+   \[
+   y = \frac{2t}{3},
+   \]
+   \[
+   z = -4t
+   \]
+
+   So, the direction vector for Line 1 is:
+   \[
+   \vec{d_1} = \left(1, \frac{2}{3}, -4\right)
+   \]
+
+- For Equation 2: 
+   \[
+   x = s,
+   \]
+   \[
+   y = -s,
+   \]
+   \[
+   z = \frac{-6s}{4} = -\frac{3s}{2}
+   \]
+
+   Therefore, the direction vector for Line 2 is:
+   \[
+   \vec{d_2} = \left(1, -1, -\frac{3}{2}\right)
+   \]
+
+Next, we calculate the cosine of the angle between these two lines using their cross product. The dot product of $\vec{d_1}$ and $\vec{d_2}$ is:
+
+   \[
+   \vec{d_1} \cdot \vec{d_2} = 1 \cdot 1 + \frac{2}{3} \cdot (-1) + (-4) \cdot -\frac{3}{2}
+   \]
+
+   Simplifying this, we get:
+   
+   \[
+   \vec{d_1} \cdot \vec{d_2} = 1 - \frac{2}{3} + 6
+   \]
+   \[
+   = \frac{3}{3} - \frac{2}{3} + \frac{18}{3}
+   \]
+   \[
+   = \frac{29}{3}
+   \]
+
+The magnitude of $\vec{d_1}$ is:
+   
+   \[
+   ||\vec{d_1}|| = \sqrt{1^2 + \left(\frac{2}{3}\right)^2 + (-4)^2}
+   \]
+   \[",False,False,False,,
+test/precalculus/927.json,1,90^\circ,"### Problem:
+Calculate the angle between the lines formed by the sets of points \((x,y,z)\) satisfying \(2x=3y=-z\) and \(6x=-y=-4z\).
+
+1. **Identify the planes and their equations:**
+   - The first set of points satisfies the equation \(2x = 3y = -z\).
+     - This can be rewritten as two separate equations:
+       \[
+       2x - z = 0
+       \]
+       \[
+       3y + z = 0
+       \]
+
+   - The second set of points satisfies the equation \(6x = -y = -4z\).
+     - This can also be rewritten as two separate equations:
+       \[
+       6x + 4z = 0
+       \]
+       \[
+       -y = 0
+       \]
+
+2. **Interpret these planes:**
+   - The plane \(2x - z = 0\) can be represented by the equation of a line in parametric form:
+     \[
+     x = t, \quad y = k, \quad z = 2t
+     \]
+     where \(k\) is some constant.
+
+   - The plane \(3y + z = 0\) can be represented by the equation of another line in parametric form:
+     \[
+     x = m, \quad y = -\frac{z}{3}, \quad z = n
+     \]
+     where \(m\) and \(n\) are some constants.
+
+3. **Determine the direction vectors:**
+   - For the first set of points, the direction vector is:
+     \[
+     \vec{d_1} = (2, 0, -1)
+     \]
+
+   - For the second set of points, the direction vector is:
+     \[
+     \vec{d_2} = (6, 4, 0)
+     \]
+
+4. **Calculate the dot product and magnitudes:**
+   - The dot product of \(\vec{d_1}\) and \(\vec{d_2}\):
+     \[
+     \vec{d_1} \cdot \vec{d_2} = (2, 0, -1) \cdot (6, 4, 0) = 2 \times 6 + 0 \times 4 + (-1) \times 0 = 12
+     \]
+
+   - The magnitudes of the vectors:
+     \[
+     |\vec{d_1}| = \sqrt{2^2 + 0^2 + (-1)^2} = \sqrt{4 + 0 + 1} = \sqrt{5}
+     \]
+     \[
+     |\vec{d_2}| = \sqrt{6^2 + 4^2 + 0^2} = \sqrt{36 + 16 + 0} = \sqrt{52} = 2\sqrt{13}
+     \]
+
+   - The cosine of the angle between the vectors is given by:
+     \[
+     \cos(\theta) = \frac{\vec{d_1} \cdot \vec{d_2}}{|\vec{d_1}| |\vec{d_2}|} = \frac",False,False,False,,
+test/precalculus/990.json,0,6 - 5i,"To solve for \( w \), the result when \( z = 2 + \sqrt{2} - (3 + 3 \sqrt{2})i \) is rotated around \( c = 2 - 3i \) by \( \frac{\pi}{4} \) counter-clockwise, we need to follow these steps:
+
+1. **Express the complex number in polar form:**
+
+   First, find the magnitude \( r \) and argument \( \theta \) of \( z \).
+
+   The magnitude \( r \) is:
+   \[
+   r = |z| = \sqrt{(2 + \sqrt{2})^2 + (-3 - 3\sqrt{2})^2}
+   \]
+   Calculate the squares inside the square root:
+   \[
+   (2 + \sqrt{2})^2 = 4 + 4\sqrt{2} + 2 = 6 + 4\sqrt{2}
+   \]
+   \[
+   (-3 - 3\sqrt{2})^2 = 9 + 18\sqrt{2} + 18 = 27 + 18\sqrt{2}
+   \]
+   Add these together:
+   \[
+   r = \sqrt{(6 + 4\sqrt{2}) + (27 + 18\sqrt{2})} = \sqrt{33 + 22\sqrt{2}}
+   \]
+
+   The argument \( \theta \) is given by:
+   \[
+   \theta = \arg(z) = \tan^{-1}\left(\frac{-3 - 3\sqrt{2}}{2 + \sqrt{2}}\right)
+   \]
+   Simplify the expression inside the arctangent:
+   \[
+   \tan(\theta) = \frac{-3(1 + \sqrt{2})}{2 + \sqrt{2}} \cdot \frac{2 - \sqrt{2}}{2 - \sqrt{2}} = \frac{-6(1 + \sqrt{2})(\sqrt{2} - 1)}{(2 + \sqrt{2})(2 - \sqrt{2})}
+   \]
+   Simplify further:
+   \[
+   = \frac{-6(2 - (1 + \sqrt{2})^2)}{4 - 2} = \frac{-6(-3\sqrt{2})}{2} = 9
+   \]
+
+   Therefore, \( z \) can be written in polar form:
+   \[
+   z = r(\cos{\theta} + i\sin{\theta})
+   \]
+
+2. **Rotate the complex number around \( c \):**
+
+   Let \( z' = z - c \). Then:
+   \[
+   z' = (r(\cos{\theta} + i\sin{\theta})) - (2 - 3i)
+   \]
+   Simplify:
+   \[
+   z' = r(\cos{\theta}) + ir\sin{\theta} - 2 + 3i
+   \]
+
+3. **Translate back to the original plane:**
+
+   Let \( w' = c + z' \):
+   \[
+   w' = (2 - 3i) + (r(\cos{\theta}) + ir\sin{\theta",False,False,False,,
+test/precalculus/990.json,1,6 - 5i,"To solve the problem of rotating \( z \) around \( c \) by \( \frac{\pi}{4} \) counter-clockwise and finding \( w \), we need to follow these steps:
+
+1. **Express \( z \) in standard form**:
+   Given \( z = 2 + \sqrt{2} - (3 + 3\sqrt{2})i \).
+
+2. **Find the distance between \( c \) and \( z \)**:
+   The complex number \( c \) is given as \( 2 - 3i \). We need to find the magnitude of \( z - c \):
+   \[
+   |z - c| = |(2 + \sqrt{2} - (3 + 3\sqrt{2})i) - (2 - 3i)| = |-1 - 2\sqrt{2} i|
+   \]
+   The magnitude is calculated as:
+   \[
+   |z - c| = \sqrt{(-1)^2 + (-2\sqrt{2})^2} = \sqrt{1 + 8} = \sqrt{9} = 3
+   \]
+
+3. **Calculate the rotation of \( z \) around \( c \)**:
+   We use the formula for rotating a complex number by an angle \( \theta \):
+   \[
+   z' = (z - c) e^{i\theta}
+   \]
+   Here, \( \theta = \frac{\pi}{4} \). Thus,
+   \[
+   w = z + c e^{i\left(\frac{\pi}{4}\right)}
+   \]
+
+4. **Compute the exponential term**:
+   Using Euler's formula for a rotation by \( \frac{\pi}{4} \):
+   \[
+   e^{i\left(\frac{\pi}{4}\right)} = \cos\left(\frac{\pi}{4}\right) + i\sin\left(\frac{\pi}{4}\right)
+   \]
+   We know:
+   \[
+   \cos\left(\frac{\pi}{4}\right) = \sin\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2}
+   \]
+   Therefore,
+   \[
+   e^{i\left(\frac{\pi}{4}\right)} = \frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}
+   \]
+
+5. **Substitute \( z - c \) and the exponential term**:
+   Recall that \( |z - c| = 3 \), so we have:
+   \[
+   w = (z - c)(1 + e^{i\left(\frac{\pi}{4}\right)})
+   \]
+   Now compute each part separately:
+
+6. **Calculate \( z - c \)**:
+   \[
+   z - c = (2 + \sqrt{2} - (3 + 3\sqrt{2})i) - (2 - 3i)
+   \]
+   Simplify this expression:
+   \[
+   w - c = (2 + \sqrt{2} - 2) + (-3 + 3)\sqrt{2} i = \sqrt{2} i
+   \]
+
+7. **Combine the results**:",False,False,False,,

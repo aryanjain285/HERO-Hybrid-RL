@@ -21,6 +21,8 @@ import time
 from pathlib import Path
 
 from hero.data import load_math500
+from hero.env import load_env_file
+from hero.judges import OpenAIJudge, resolve_judge
 from hero.llm import OllamaClient, OllamaConfig, OllamaError
 from hero.study import (
     apply_verifiers,
@@ -32,6 +34,7 @@ from hero.study import (
 from hero.verifiers import (
     ExactMatchVerifier,
     NormalisedMatchVerifier,
+    RawMatchVerifier,
     SymbolicVerifier,
 )
 
@@ -42,7 +45,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--samples", type=int, default=2, help="responses per problem")
     parser.add_argument("--min-level", type=int, default=3, choices=range(1, 6))
     parser.add_argument("--model", default="qwen2.5:1.5b-instruct")
-    parser.add_argument("--judge-model", default=None, help="defaults to --model")
+    parser.add_argument(
+        "--judge",
+        default="ollama:qwen2.5:7b-instruct",
+        help="'openai:gpt-4o' for the paper's protocol, or 'ollama:<model>'",
+    )
+    parser.add_argument(
+        "--env-file",
+        default=None,
+        help="dotenv file supplying OPENAI_API_KEY; values are never logged",
+    )
     parser.add_argument("--host", default="http://localhost:11434")
     parser.add_argument("--max-tokens", type=int, default=768)
     parser.add_argument("--temperature", type=float, default=0.7)
@@ -98,26 +110,53 @@ def print_false_negatives(result: StudyResult, limit: int = 5) -> None:
         print(f"  strict    : {record.verdicts.get(strict)}")
 
 
+def print_judge_disagreements(result: StudyResult, limit: int = 6) -> None:
+    """Cases where the strongest verifier and the judge disagree.
+
+    Audit A-5 requires these to be re-adjudicated by hand rather than assumed to
+    be verifier errors: the judge is the label source, so a judge mistake is
+    recorded as a verifier false positive. A local 1.5B judge, for instance, ruled
+    sqrt(117) not equivalent to 3*sqrt(13).
+    """
+    cases = [
+        r
+        for r in result.records
+        if r.is_labelled and (r.verdicts.get("symbolic") == "correct") != bool(r.judge_label)
+    ]
+    print(f"\n{'=' * 78}")
+    print(f"Symbolic verifier vs judge disagreements ({len(cases)}) -- audit by hand")
+    print("=" * 78)
+    if not cases:
+        print("none")
+        return
+    for record in cases[:limit]:
+        tail = record.response.strip().replace("\n", " ")[-100:]
+        print(f"\n  reference : {record.reference}")
+        print(f"  response  : ...{tail}")
+        print(f"  symbolic  : {record.verdicts.get('symbolic')}   judge: {record.judge_label}")
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     progress = not args.quiet
 
+    if args.env_file:
+        loaded = load_env_file(args.env_file)
+        print(f"env: loaded {len(loaded)} variable(s) from {args.env_file}")
+
     generator = OllamaClient(
         OllamaConfig(model=args.model, host=args.host, max_tokens=args.max_tokens)
     )
-    judge = OllamaClient(
-        OllamaConfig(model=args.judge_model or args.model, host=args.host, max_tokens=64)
-    )
-
     try:
         generator.require_model()
-        judge.require_model()
-    except OllamaError as exc:
+        judge = resolve_judge(args.judge, host=args.host)
+        judge.preflight()
+    except (OllamaError, RuntimeError, ValueError) as exc:
         print(f"preflight failed: {exc}", file=sys.stderr)
         return 2
 
     print(f"generator: {generator.config.model}")
-    print(f"judge    : {judge.config.model}")
+    print(f"judge    : {judge.name}")
     problems = load_math500(limit=args.problems, min_level=args.min_level)
     print(f"problems : {len(problems)} at level >= {args.min_level}")
     print(f"responses: {len(problems) * args.samples}")
@@ -135,12 +174,17 @@ def main(argv: list[str] | None = None) -> int:
 
     print("\napplying verifiers")
     with SymbolicVerifier(timeout_s=5.0) as symbolic:
-        verifiers = (ExactMatchVerifier(), NormalisedMatchVerifier(), symbolic)
+        verifiers = (
+            RawMatchVerifier(),
+            ExactMatchVerifier(),
+            NormalisedMatchVerifier(),
+            symbolic,
+        )
         names = tuple(v.name for v in verifiers)
         apply_verifiers(records, verifiers)
 
     print("\njudging true correctness")
-    abstentions = label_responses(judge, records, progress=progress)
+    abstentions, truncations = label_responses(judge, records, progress=progress)
 
     labelled = [r for r in records if r.is_labelled]
     base_rate = 100.0 * sum(bool(r.judge_label) for r in labelled) / max(len(labelled), 1)
@@ -149,10 +193,23 @@ def main(argv: list[str] | None = None) -> int:
         metrics=score_verifiers(records, names),
         base_rate=base_rate,
         abstentions=abstentions,
+        truncations=truncations,
+        judge_name=judge.name,
     )
 
     print_table(result)
     print_false_negatives(result)
+    print_judge_disagreements(result)
+    if isinstance(judge, OpenAIJudge):
+        print(
+            f"\njudge cost: ${judge.estimated_cost_usd:.4f} over {judge.calls} calls "
+            f"({judge.prompt_tokens} prompt + {judge.completion_tokens} completion tokens)"
+        )
+    if truncations:
+        print(
+            f"\nWARNING: {truncations} judge response(s) hit the token cap. "
+            "Raise the judge's max_tokens; these are configuration faults, not data."
+        )
     print(f"\nelapsed: {time.time() - started:.0f}s")
 
     if args.out:

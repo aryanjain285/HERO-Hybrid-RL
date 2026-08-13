@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import re
 from concurrent.futures import ProcessPoolExecutor, TimeoutError as FutureTimeout
+from concurrent.futures.process import BrokenProcessPool
 from dataclasses import dataclass
 from enum import StrEnum
 from fractions import Fraction
@@ -30,6 +31,7 @@ from fractions import Fraction
 __all__ = [
     "ExactMatchVerifier",
     "NormalisedMatchVerifier",
+    "RawMatchVerifier",
     "SymbolicVerifier",
     "Verdict",
     "VerificationResult",
@@ -79,9 +81,16 @@ class VerificationResult:
 
 _BOXED = re.compile(r"\\boxed\s*\{")
 _FINAL_ANSWER = re.compile(
-    r"(?:final\s+answer|answer)\s*(?:is)?\s*[:=]?\s*(.+?)(?:\n|$)", re.IGNORECASE
+    # Horizontal whitespace only, so the capture cannot cross a newline and pick up
+    # the following prose line. The capture must also start with something other
+    # than ':' or '=', otherwise backtracking lets the optional separator be
+    # surrendered and the punctuation itself captured.
+    r"(?:final\s+answer|answer)[^\S\n]*(?:is)?[^\S\n]*[:=]?[^\S\n]*([^\s:=][^\n]*?)[^\S\n]*(?:\n|$)",
+    re.IGNORECASE,
 )
+_PROSE_WORD = re.compile(r"[A-Za-z]{2,}")
 _NUMBER = re.compile(r"-?\d+(?:\.\d+)?(?:/\d+)?")
+_DISPLAY_MATH = re.compile(r"\\\[(.+?)\\\]", re.DOTALL)
 
 
 def _balanced_braces(text: str, start: int) -> str | None:
@@ -99,6 +108,18 @@ def _balanced_braces(text: str, start: int) -> str | None:
             if depth == 0:
                 return text[start + 1 : i]
     return None
+
+
+def _looks_like_prose(text: str) -> bool:
+    """Whether a candidate reads as a sentence rather than an answer.
+
+    Guards the "final answer" cue, which otherwise captures a lead-in line such as
+    "the polar coordinates of the point are:". Answers containing digits or LaTeX
+    are never treated as prose, so short word answers stay valid.
+    """
+    if any(ch.isdigit() for ch in text) or "\\" in text:
+        return False
+    return len(_PROSE_WORD.findall(text)) > 3
 
 
 def extract_answers(response: str) -> tuple[str, ...]:
@@ -119,7 +140,14 @@ def extract_answers(response: str) -> tuple[str, ...]:
         return tuple(boxed)
 
     if phrase := _FINAL_ANSWER.search(response):
-        if candidate := phrase.group(1).strip().rstrip("."):
+        candidate = phrase.group(1).strip().rstrip(".")
+        if candidate and not _looks_like_prose(candidate):
+            return (candidate,)
+
+    # Unboxed answers are commonly the closing display-math block. Preferred over
+    # the last-number fallback, which would reduce "(3, \frac{\pi}{2})" to "2".
+    if blocks := _DISPLAY_MATH.findall(response):
+        if candidate := blocks[-1].strip():
             return (candidate,)
 
     numbers = _NUMBER.findall(response)
@@ -133,12 +161,22 @@ _STRIP_WRAPPERS = (
     (r"\\,", ""),
     (r"\\;", ""),
     (r"\\ ", " "),
+    # Escaped currency before the bare delimiter, or "\$78" leaves a stray "\".
+    (r"\\\$", ""),
     (r"\$", ""),
     (r"\\text\s*\{([^}]*)\}", r"\1"),
     (r"\\mathrm\s*\{([^}]*)\}", r"\1"),
     (r"\\mbox\s*\{([^}]*)\}", r"\1"),
     (r"\\dfrac", r"\\frac"),
     (r"\\tfrac", r"\\frac"),
+    # Symbol names SymPy already knows, so expressions containing them stay
+    # parseable instead of failing on the backslash.
+    (r"\\pi\b", "pi"),
+    (r"\\theta\b", "theta"),
+    (r"\\alpha\b", "alpha"),
+    (r"\\beta\b", "beta"),
+    (r"\\cdot", "*"),
+    (r"\\times", "*"),
 )
 _UNITS = re.compile(
     r"\b(?:cm|mm|km|kg|g|m|s|ms|hours?|hrs?|minutes?|mins?|seconds?|secs?|"
@@ -163,7 +201,10 @@ def normalise(text: str) -> str:
         s = new
     s = re.sub(r"\\sqrt\s*\{([^{}]+)\}", r"sqrt(\1)", s)
     s = _UNITS.sub("", s)
-    s = re.sub(r"^[a-zA-Z]\s*(?:\(\s*[a-zA-Z]\s*\))?\s*=\s*", "", s)  # drop "x =" prefix
+    # Drop a leading assignment such as "x =", "f(x) =" or "(r, \theta) =": the
+    # question already fixes what is being solved for. Restricted to left-hand
+    # sides made of names and separators so "2 = x" style content is untouched.
+    s = re.sub(r"^\(?[a-zA-Z\\][a-zA-Z\\,\s]{0,24}\)?\s*=\s*(?=.)", "", s, count=1)
     s = s.replace("\\%", "").replace("%", "")  # escaped form first, or a "\" survives
     s = re.sub(r"(?<=\d),(?=\d{3}\b)", "", s)  # thousands separators
     return re.sub(r"\s+", "", s).rstrip(".").lower()
@@ -201,8 +242,33 @@ def _split_set(text: str) -> tuple[str, ...]:
     return tuple(p for p in (part.strip() for part in parts) if p)
 
 
+class RawMatchVerifier:
+    """Literal string equality after whitespace stripping only.
+
+    No LaTeX normalisation and no unit handling, so ``\\boxed{50\\%}`` fails
+    against ``50``. This is the literal end of the spectrum, occupying the role of
+    the paper's ``math_reward.py`` (10.1% recall, 97.5% precision). Without it the
+    study cannot exhibit a precision/recall trade-off at all, because every other
+    verifier here normalises and they then agree on almost every scalar answer.
+    """
+
+    name = "raw_match"
+
+    def verify(self, response: str, reference: str) -> VerificationResult:
+        extracted = extract_answers(response)
+        if not extracted:
+            return VerificationResult(Verdict.NO_ANSWER, "no_extraction")
+        ref = reference.strip()
+        verdict = (
+            Verdict.CORRECT
+            if any(c.strip() == ref for c in extracted)
+            else Verdict.INCORRECT
+        )
+        return VerificationResult(verdict, "raw", extracted, (reference,))
+
+
 class ExactMatchVerifier:
-    """Strict normalised equality. Precision ceiling, recall floor of the study."""
+    """Normalised equality without set comparison or numeric tolerance."""
 
     name = "exact_match"
 
@@ -280,18 +346,28 @@ class NormalisedMatchVerifier:
 
 
 def _sympy_equivalent(a: str, b: str) -> bool:
-    """Subprocess entry point: True when two expressions are symbolically equal."""
-    from sympy import simplify
-    from sympy.parsing.sympy_parser import (
-        implicit_multiplication_application,
-        parse_expr,
-        standard_transformations,
-    )
+    """Subprocess entry point: True when two expressions are symbolically equal.
 
-    transformations = standard_transformations + (implicit_multiplication_application,)
-    left = parse_expr(a, transformations=transformations)
-    right = parse_expr(b, transformations=transformations)
-    return bool(simplify(left - right) == 0)
+    Never raises for content reasons. Unparseable input is a routine outcome and
+    returns False, so only genuine infrastructure failures reach the parent and
+    the caller can distinguish "not equivalent" from "verifier unavailable".
+    """
+    try:
+        from sympy import simplify
+        from sympy.parsing.sympy_parser import (
+            implicit_multiplication_application,
+            parse_expr,
+            standard_transformations,
+        )
+
+        transformations = standard_transformations + (implicit_multiplication_application,)
+        left = parse_expr(a, transformations=transformations)
+        right = parse_expr(b, transformations=transformations)
+        return bool(simplify(left - right) == 0)
+    except ImportError:
+        raise
+    except Exception:
+        return False
 
 
 class SymbolicVerifier:
@@ -350,8 +426,21 @@ class SymbolicVerifier:
                     (reference,),
                     f"exceeded {self.timeout_s}s",
                 )
-            except Exception:
-                continue  # unparseable candidate is ordinary
+            except (BrokenProcessPool, OSError, ImportError) as exc:
+                # Infrastructure failure, not a bad answer. Surfacing it as ERROR
+                # matters: a pool that cannot spawn would otherwise make this
+                # verifier degrade silently to plain normalised matching, showing
+                # up only as unexplained lost recall.
+                self.close()
+                return VerificationResult(
+                    Verdict.ERROR,
+                    "sympy_unavailable",
+                    base.extracted,
+                    (reference,),
+                    f"{type(exc).__name__}: {exc}",
+                )
+            except (SyntaxError, TypeError, ValueError, AttributeError, KeyError):
+                continue  # an unparseable candidate is ordinary
         return VerificationResult(
             Verdict.INCORRECT, "sympy", base.extracted, (reference,), base.detail
         )

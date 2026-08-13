@@ -50,6 +50,28 @@ class TestExtraction:
     def test_unclosed_box_is_ignored(self):
         assert extract_answers(r"\boxed{42") == ("42",)  # falls back to last number
 
+    def test_final_answer_cue_does_not_cross_a_newline(self):
+        """Regression: `\\s*` crossed the line break and captured the next line."""
+        text = "#### Final answer:\n\nThus, the coordinates are:\n\\[\n(3, 5)\n\\]"
+        assert extract_answers(text) == ("(3, 5)",)
+
+    def test_final_answer_cue_does_not_capture_its_own_colon(self):
+        """Regression: backtracking surrendered `[:=]?`, capturing ':' as the answer."""
+        assert extract_answers("Final answer:\n\\[ 7 \\]") == ("7",)
+
+    def test_display_math_beats_last_number_fallback(self):
+        """`(3, \\frac{\\pi}{2})` must not degrade to '2'."""
+        got = extract_answers("so we get\n\\[ (3, \\frac{\\pi}{2}) \\]")
+        assert got == (r"(3, \frac{\pi}{2})",)
+
+    def test_prose_lead_in_is_not_taken_as_an_answer(self):
+        text = "The answer is the sum of all terms in the sequence\n\\[ 12 \\]"
+        assert extract_answers(text) == ("12",)
+
+    def test_short_word_answers_still_extract(self):
+        """The prose guard must not reject legitimate one-word answers."""
+        assert extract_answers("Final answer: even") == ("even",)
+
 
 class TestNormalisation:
     @pytest.mark.parametrize(
@@ -92,6 +114,19 @@ class TestPrecisionRecallOrdering:
         assert normalise(r"50\%") == "50"
         assert EXACT.verify(r"\boxed{50\%}", "50").is_pass
         assert LENIENT.verify(r"\boxed{50\%}", "50").is_pass
+
+    def test_escaped_currency_is_normalised(self):
+        """Regression, same class as the percent bug: `\\$78` left a stray backslash."""
+        assert normalise(r"\$78") == "78"
+        assert LENIENT.verify(r"\boxed{\$78}", "78").is_pass
+
+    def test_tuple_assignment_prefix_is_stripped(self):
+        """`(r, \\theta) = (3, 5)` states the same answer as `(3, 5)`."""
+        assert normalise(r"(r, \theta) = (3, 5)") == "(3,5)"
+
+    def test_known_greek_symbols_survive_as_sympy_names(self):
+        assert normalise(r"\frac{\pi}{2}") == "(pi)/(2)"
+        assert normalise(r"\theta") == "theta"
 
     def test_both_accept_an_identical_answer(self):
         assert EXACT.verify(r"\boxed{42}", "42").is_pass
@@ -219,24 +254,41 @@ class TestVerdictSemantics:
             NormalisedMatchVerifier(rel_tol=-1.0)
 
 
+@pytest.fixture(scope="module")
+def symbolic():
+    """One SymbolicVerifier for the module.
+
+    Each instance spawns a subprocess on first use; sharing one keeps the suite
+    fast and avoids repeated spawn churn.
+    """
+    with SymbolicVerifier() as verifier:
+        yield verifier
+
+
 class TestSymbolicVerifier:
-    def test_algebraic_equivalence_beyond_normalisation(self):
-        with SymbolicVerifier() as verifier:
-            assert verifier.verify(r"\boxed{2*x + 2}", "2*(x+1)").is_pass
+    def test_algebraic_equivalence_beyond_normalisation(self, symbolic):
+        assert symbolic.verify(r"\boxed{2*x + 2}", "2*(x+1)").is_pass
 
-    def test_delegates_to_normalisation_first(self):
-        with SymbolicVerifier() as verifier:
-            result = verifier.verify(r"\boxed{42}", "42")
-            assert result.is_pass
-            assert result.strategy == "scalar"
+    def test_equivalent_radicals(self, symbolic):
+        """The case a 1.5B judge got wrong in the M0 study: sqrt(117) = 3*sqrt(13)."""
+        assert symbolic.verify(r"\boxed{\sqrt{117}}", r"3\sqrt{13}").is_pass
 
-    def test_wrong_answer_still_rejected(self):
-        with SymbolicVerifier() as verifier:
-            assert not verifier.verify(r"\boxed{2*x + 3}", "2*(x+1)").is_pass
+    def test_delegates_to_normalisation_first(self, symbolic):
+        result = symbolic.verify(r"\boxed{42}", "42")
+        assert result.is_pass
+        assert result.strategy == "scalar"
 
-    def test_unparseable_candidate_does_not_raise(self):
-        with SymbolicVerifier() as verifier:
-            assert not verifier.verify(r"\boxed{??!!}", "42").is_pass
+    def test_wrong_answer_still_rejected(self, symbolic):
+        assert not symbolic.verify(r"\boxed{2*x + 3}", "2*(x+1)").is_pass
+
+    def test_unparseable_candidate_does_not_raise(self, symbolic):
+        assert not symbolic.verify(r"\boxed{??!!}", "42").is_pass
+
+    def test_latex_input_does_not_error(self, symbolic):
+        """Regression: sympy raises TokenError on backslashes, which is content,
+        not infrastructure, so it must not surface as Verdict.ERROR."""
+        result = symbolic.verify(r"\boxed{\text{Evelyn}}", r"\text{Bob}")
+        assert result.verdict is Verdict.INCORRECT
 
     def test_close_is_idempotent(self):
         verifier = SymbolicVerifier()

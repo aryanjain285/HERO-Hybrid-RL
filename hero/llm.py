@@ -81,10 +81,16 @@ class Generation:
     model: str
     tokens: int
     duration_s: float
+    done_reason: str = ""
+    """Ollama's stop reason; ``length`` means the token cap was reached."""
 
     @property
     def tokens_per_s(self) -> float:
         return self.tokens / self.duration_s if self.duration_s > 0 else 0.0
+
+    @property
+    def truncated(self) -> bool:
+        return self.done_reason == "length"
 
 
 @dataclass(frozen=True)
@@ -92,14 +98,18 @@ class JudgeVerdict:
     """An equivalence judgement.
 
     Attributes:
-        equivalent: True, False, or None when the judge did not emit a parseable
+        equivalent: True, False, or None when the judge emitted no parseable
             decision. None is never coerced to False; it is reported separately.
         raw: The judge's full response, retained for the manual audit the
             protocol requires.
+        truncated: True when the response hit the token cap. Distinguishes a
+            genuine abstention from one caused by cutting the judge off before it
+            reached its verdict, which is a configuration fault rather than data.
     """
 
     equivalent: bool | None
     raw: str
+    truncated: bool = False
 
     @property
     def abstained(self) -> bool:
@@ -192,6 +202,7 @@ class OllamaClient:
             model=self.config.model,
             tokens=int(data.get("eval_count") or 0),
             duration_s=float(data.get("eval_duration") or 0) / 1e9,
+            done_reason=str(data.get("done_reason") or ""),
         )
 
     def judge_equivalence(
@@ -205,8 +216,12 @@ class OllamaClient:
         prompt = EQUIVALENCE_TEMPLATE.format(
             question=question, ground_truth=ground_truth, student_answer=student_answer
         )
-        raw = self.generate(prompt, temperature=0.0, max_tokens=64).text
-        return JudgeVerdict(_parse_decision(raw), raw)
+        # Small models reason before deciding; a tight cap truncates them mid-thought
+        # and produces abstentions that look like uncertainty but are configuration.
+        generation = self.generate(prompt, temperature=0.0, max_tokens=self.config.max_tokens)
+        return JudgeVerdict(
+            _parse_decision(generation.text), generation.text, generation.truncated
+        )
 
 
 def _parse_decision(raw: str) -> bool | None:

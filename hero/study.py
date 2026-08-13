@@ -17,11 +17,14 @@ from pathlib import Path
 from typing import Protocol
 
 from hero.data import Problem
+from hero.judges import Judge
 from hero.llm import OllamaClient
+from hero.stats import Interval, wilson_interval
 from hero.verifiers import Verdict, VerificationResult
 
 __all__ = [
     "ResponseRecord",
+    "load_study",
     "StudyResult",
     "VerifierMetrics",
     "Verifier",
@@ -90,6 +93,25 @@ class VerifierMetrics:
             + self.false_negatives
         )
 
+    @property
+    def recall_interval(self) -> Interval:
+        """Wilson 95% interval on recall (PRD 9.2, audit A-6).
+
+        Required for any reported figure: at these sample sizes a point estimate
+        of 100% is compatible with a true rate well below it.
+        """
+        return wilson_interval(self.true_positives, self.true_positives + self.false_negatives)
+
+    @property
+    def precision_interval(self) -> Interval:
+        """Wilson 95% interval on precision."""
+        return wilson_interval(self.true_positives, self.true_positives + self.false_positives)
+
+    @property
+    def accuracy_interval(self) -> Interval:
+        """Wilson 95% interval on accuracy."""
+        return wilson_interval(self.true_positives + self.true_negatives, self.support)
+
 
 @dataclass
 class StudyResult:
@@ -100,16 +122,40 @@ class StudyResult:
     base_rate: float
     """Fraction of labelled responses the judge called correct."""
     abstentions: int
+    truncations: int = 0
+    """Judge responses cut off by the token cap: a configuration fault."""
+    judge_name: str = ""
 
     def to_json(self, path: str | Path) -> None:
         """Persist everything needed to recompute metrics or audit labels."""
         payload = {
             "base_rate": self.base_rate,
             "abstentions": self.abstentions,
+            "truncations": self.truncations,
+            "judge": self.judge_name,
             "metrics": [asdict(m) for m in self.metrics],
             "records": [asdict(r) for r in self.records],
         }
         Path(path).write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+
+def load_study(path: str | Path) -> StudyResult:
+    """Reload a persisted study, including responses and judge labels.
+
+    Enables re-scoring verifier changes against a fixed labelled set without
+    regenerating responses or paying for judging again. Metrics are recomputed by
+    the caller, since the verifier set may have changed.
+    """
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    records = [ResponseRecord(**row) for row in payload["records"]]
+    return StudyResult(
+        records=records,
+        metrics=[],
+        base_rate=float(payload.get("base_rate", 0.0)),
+        abstentions=int(payload.get("abstentions", 0)),
+        truncations=int(payload.get("truncations", 0)),
+        judge_name=str(payload.get("judge", "")),
+    )
 
 
 def generate_responses(
@@ -172,22 +218,35 @@ def apply_verifiers(
 
 
 def label_responses(
-    client: OllamaClient, records: list[ResponseRecord], *, progress: bool = True
-) -> int:
-    """Label true correctness with the judge. Returns the abstention count."""
-    abstentions = 0
+    judge: Judge, records: list[ResponseRecord], *, progress: bool = True
+) -> tuple[int, int]:
+    """Label true correctness with a judge.
+
+    Args:
+        judge: Any :class:`~hero.judges.Judge`; the study is judge-agnostic so
+            local and API judges can be compared (A-5).
+        records: Modified in place.
+        progress: Print per-item progress.
+
+    Returns:
+        ``(abstentions, truncations)``. Truncations are reported separately
+        because they indicate a token cap set too low rather than judge
+        uncertainty, and would otherwise be mistaken for data.
+    """
+    abstentions = truncations = 0
     for i, record in enumerate(records, 1):
-        verdict = client.judge_equivalence(
-            record.question, record.reference, record.response
-        )
+        verdict = judge.judge(record.question, record.reference, record.response)
         record.judge_label = verdict.equivalent
         record.judge_raw = verdict.raw
         if verdict.abstained:
             abstentions += 1
+        if verdict.truncated:
+            truncations += 1
         if progress:
             label = "abstain" if verdict.abstained else str(verdict.equivalent)
-            print(f"  judged {i}/{len(records)} -> {label}", flush=True)
-    return abstentions
+            flag = " [truncated]" if verdict.truncated else ""
+            print(f"  judged {i}/{len(records)} -> {label}{flag}", flush=True)
+    return abstentions, truncations
 
 
 def score_verifiers(
